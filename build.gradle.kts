@@ -30,6 +30,6 @@ sonarqube {
         property("sonar.organization", "avansinformatica-marc")
         property("sonar.host.url", "https://sonarcloud.io")
 
-        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/kover/report.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/report.xml")
     }
 }
