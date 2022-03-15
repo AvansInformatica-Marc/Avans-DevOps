@@ -20,12 +20,16 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
+tasks.getByName("sonarqube") {
+    dependsOn("koverMergedReport")
+}
+
 sonarqube {
     properties {
         property("sonar.projectKey", "Avans-DevOps")
         property("sonar.organization", "avansinformatica-marc")
         property("sonar.host.url", "https://sonarcloud.io")
 
-        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/kover/report.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/report.xml")
     }
 }
