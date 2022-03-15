@@ -20,6 +20,10 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
+tasks.getByName("sonarqube") {
+    dependsOn("koverMergedReport")
+}
+
 sonarqube {
     properties {
         property("sonar.projectKey", "Avans-DevOps")
