@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
     testImplementation(kotlin("test"))
+    testImplementation("io.mockk:mockk:1.12.3")
 }
 
 tasks.test {
