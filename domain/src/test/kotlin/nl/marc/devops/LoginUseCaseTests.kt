@@ -12,7 +12,7 @@ class LoginUseCaseTests {
         // Arrange
         val email = "test@avans.nl"
         val password = "MySecretPassword"
-        val expectedUser = User("ABCD", email, password.hashCode().toString(16))
+        val expectedUser = User("ABCD", "ABCD", email, password.hashCode().toString(16))
         val userRepositoryMock = mockk<UserRepository>()
         every { userRepositoryMock.findUserByEmail(email) } returns expectedUser
         val loginUseCase = LoginUseCase(userRepositoryMock)
@@ -44,7 +44,7 @@ class LoginUseCaseTests {
         // Arrange
         val email = "test@avans.nl"
         val password = "MySecretPassword"
-        val expectedUser = User("ABCD", email, password.hashCode().toString(16))
+        val expectedUser = User("ABCD", "ABCD", email, password.hashCode().toString(16))
         val userRepositoryMock = mockk<UserRepository>()
         every { userRepositoryMock.findUserByEmail(email) } returns expectedUser
         val loginUseCase = LoginUseCase(userRepositoryMock)
