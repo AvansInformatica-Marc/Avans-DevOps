@@ -1,6 +1,6 @@
 package nl.marc.devops
 
-class LoginUseCase(private val userRepository: UserRepository) {
+class AccountService(private val userRepository: UserRepository) {
     fun login(email: String, password: String): User {
         val user = userRepository.findUserByEmail(email)
         val passwordHash = password.hashCode().toString(16)
@@ -10,5 +10,9 @@ class LoginUseCase(private val userRepository: UserRepository) {
             user.passwordHash != passwordHash -> throw IllegalArgumentException("Password is invalid")
             else -> return user
         }
+    }
+
+    fun register(name: String, email: String, password: String): User {
+        return userRepository.addUser(User(name, email, password.hashCode().toString(16)))
     }
 }
