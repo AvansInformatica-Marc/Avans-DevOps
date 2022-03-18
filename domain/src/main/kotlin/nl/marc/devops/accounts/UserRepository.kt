@@ -1,4 +1,4 @@
-package nl.marc.devops
+package nl.marc.devops.accounts
 
 interface UserRepository {
     fun findUserByEmail(email: String): User?

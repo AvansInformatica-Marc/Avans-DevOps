@@ -1,9 +1,10 @@
-package nl.marc.devops
+package nl.marc.devops.projects
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import nl.marc.devops.accounts.User
 import kotlin.test.*
 
 class ProjectsServiceTests {

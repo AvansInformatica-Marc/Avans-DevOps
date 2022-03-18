@@ -1,4 +1,4 @@
-package nl.marc.devops
+package nl.marc.devops.accounts
 
 import io.mockk.every
 import io.mockk.mockk

@@ -1,4 +1,4 @@
-package nl.marc.devops
+package nl.marc.devops.projects
 
 enum class Role {
     DEVELOPERS,

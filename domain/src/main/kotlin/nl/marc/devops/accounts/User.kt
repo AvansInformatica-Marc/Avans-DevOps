@@ -1,4 +1,4 @@
-package nl.marc.devops
+package nl.marc.devops.accounts
 
 class User(
     val name: String,
