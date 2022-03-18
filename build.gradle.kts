@@ -13,7 +13,7 @@ allprojects {
 }
 
 extensions.configure<KoverExtension> {
-    coverageEngine.set(CoverageEngine.INTELLIJ)
+    coverageEngine.set(CoverageEngine.JACOCO)
 }
 
 tasks.register("clean", Delete::class) {
