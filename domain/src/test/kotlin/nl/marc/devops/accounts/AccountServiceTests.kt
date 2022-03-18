@@ -1,4 +1,4 @@
-package nl.marc.devops
+package nl.marc.devops.accounts
 
 import io.mockk.every
 import io.mockk.mockk
@@ -28,7 +28,6 @@ class AccountServiceTests {
     @Test
     fun `AD-87, AD-91) login throws an error when an invalid email was supplied`() {
         // Arrange
-        val email = "test@avans.nl"
         val password = "MySecretPassword"
         val userRepositoryMock = mockk<UserRepository>()
         every { userRepositoryMock.findUserByEmail(any()) } returns null

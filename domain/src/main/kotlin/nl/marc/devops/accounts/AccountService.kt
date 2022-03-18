@@ -1,4 +1,4 @@
-package nl.marc.devops
+package nl.marc.devops.accounts
 
 class AccountService(private val userRepository: UserRepository) {
     fun login(email: String, password: String): User {

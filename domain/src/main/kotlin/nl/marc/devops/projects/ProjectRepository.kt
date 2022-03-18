@@ -1,4 +1,4 @@
-package nl.marc.devops
+package nl.marc.devops.projects
 
 interface ProjectRepository {
     fun addProject(project: Project): Project

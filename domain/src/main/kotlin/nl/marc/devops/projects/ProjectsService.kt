@@ -1,4 +1,6 @@
-package nl.marc.devops
+package nl.marc.devops.projects
+
+import nl.marc.devops.accounts.User
 
 class ProjectsService(private val projectRepository: ProjectRepository) {
     fun createProject(productOwner: User, project: Project): Project {
