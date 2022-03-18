@@ -4,6 +4,7 @@ import io.mockk.mockk
 import nl.marc.devops.notifications.sending_apis.EmailSender
 import nl.marc.devops.notifications.sending_apis.WebhookSender
 import nl.marc.devops.notifications.sending_strategy.EmailNotificationStrategy
+import nl.marc.devops.notifications.sending_strategy.PrivateWebhookNotificationStrategy
 import nl.marc.devops.notifications.sending_strategy.SlackNotificationStrategy
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -38,6 +39,21 @@ class NotificationServiceFactoryTests {
 
         // Assert
         assertIs<SlackNotificationStrategy>(strategy)
+    }
+
+    @Test
+    fun `AD-30, AD-101) createNotificationStrategy will create a private webhook strategy when channel has type PRIVATE_WEBHOOK`() {
+        // Arrange
+        val channel = NotificationChannel(PrivateWebhookNotificationStrategy.CHANNEL_NAME, "https://webhook.avans-devops.nl/")
+        val emailSender = mockk<EmailSender>()
+        val webhookSender = mockk<WebhookSender>()
+        val factory = NotificationServiceFactory(webhookSender, emailSender)
+
+        // Act
+        val strategy = factory.createNotificationStrategy(channel)
+
+        // Assert
+        assertIs<PrivateWebhookNotificationStrategy>(strategy)
     }
 
     @Test
