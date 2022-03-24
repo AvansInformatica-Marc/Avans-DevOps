@@ -8,7 +8,7 @@ import nl.marc.devops.fixtures.UsersFixture
 import nl.marc.devops.notifications.sending_strategy.SendNotificationStrategy
 import kotlin.test.Test
 
-class NotificationServiceTests {
+class NotificationServiceImplTests {
     @Test
     fun `AD-30, AD-101) When adding a notification channel, the repository gets updated`() {
         // Arrange
@@ -17,10 +17,10 @@ class NotificationServiceTests {
         val repository = mockk<NotificationsRepository>()
         justRun { repository.saveNotificationChannelsForUser(any(), any()) }
         val notificationFactory = mockk<NotificationServiceFactory>()
-        val notificationService = NotificationService(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
 
         // Act
-        notificationService.addChannelsToUser(user, channel)
+        notificationServiceImpl.addChannelsToUser(user, channel)
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { repository.saveNotificationChannelsForUser(any(), any()) }
@@ -35,10 +35,10 @@ class NotificationServiceTests {
         val repository = mockk<NotificationsRepository>()
         justRun { repository.saveNotificationChannelsForUser(any(), any()) }
         val notificationFactory = mockk<NotificationServiceFactory>()
-        val notificationService = NotificationService(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
 
         // Act
-        notificationService.addChannelsToUser(user, emailChannel, slackChannel)
+        notificationServiceImpl.addChannelsToUser(user, emailChannel, slackChannel)
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { repository.saveNotificationChannelsForUser(any(), any()) }
@@ -59,10 +59,10 @@ class NotificationServiceTests {
         every { notificationFactory.createNotificationStrategy(any<NotificationChannel>()) } returns notificationStrategy
         justRun { notificationStrategy.sendNotification(any(), any(), any()) }
 
-        val notificationService = NotificationService(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
 
         // Act
-        notificationService.sendNotification("Build failed", "Pipeline", user)
+        notificationServiceImpl.sendNotification("Build failed", "Pipeline", user)
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { notificationStrategy.sendNotification(any(), any(), recipient) }
@@ -89,10 +89,10 @@ class NotificationServiceTests {
         every { notificationFactory.createNotificationStrategy(emailChannel) } returns emailStrategy
         every { notificationFactory.createNotificationStrategy(slackChannel) } returns slackStrategy
 
-        val notificationService = NotificationService(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
 
         // Act
-        notificationService.sendNotification("Build failed", "Pipeline", user)
+        notificationServiceImpl.sendNotification("Build failed", "Pipeline", user)
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { emailStrategy.sendNotification(any(), any(), emailRecipient) }
@@ -108,10 +108,10 @@ class NotificationServiceTests {
         val notificationFactory = mockk<NotificationServiceFactory>()
         val notificationStrategy = mockk<SendNotificationStrategy>()
         every { notificationFactory.createNotificationStrategy(any<NotificationChannel>()) } returns notificationStrategy
-        val notificationService = NotificationService(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
 
         // Act
-        notificationService.sendNotification("Build failed", "Pipeline", user)
+        notificationServiceImpl.sendNotification("Build failed", "Pipeline", user)
 
         // Assert
         verify(exactly = INVOCATION_KIND_NEVER) { notificationStrategy.sendNotification(any(), any(), any()) }
