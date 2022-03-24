@@ -28,7 +28,7 @@ class NewTaskNotifierTests {
         task.title = "Test notifications"
 
         // Act
-        notifier.notifyAssignment(task, Role.TESTER)
+        notifier.onTaskChangedAssignment(task, Role.TESTER)
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { getUserByRoleService.getUsersByRole(Role.TESTER) }
