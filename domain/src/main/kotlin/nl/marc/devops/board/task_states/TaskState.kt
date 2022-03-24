@@ -8,38 +8,42 @@ abstract class TaskState {
     abstract val swimlane: String
 
     open fun markAsPlanned() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun startDevelopment() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun setDevelopmentCompleted() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun setPlannedForTesting() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun setTestingInProgress() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun testingSucceeded() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun testingFailed() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun passesDefinitionOfDone() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
     open fun failedDefinitionOfDone() {
-        throw IllegalStateException("Not allowed")
+        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
+    }
+
+    companion object {
+        const val DEFAULT_ERROR_MESSAGE = "Not allowed in this state"
     }
 }

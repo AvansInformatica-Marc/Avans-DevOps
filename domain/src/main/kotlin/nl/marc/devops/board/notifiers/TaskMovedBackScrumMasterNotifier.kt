@@ -18,5 +18,7 @@ class TaskMovedBackScrumMasterNotifier(
         )
     }
 
-    override fun onTaskChangedAssignment(task: Task, newAssignedRole: Role) {}
+    override fun onTaskChangedAssignment(task: Task, newAssignedRole: Role) {
+        // Ignore: scrum master shouldn't be notified of this
+    }
 }
