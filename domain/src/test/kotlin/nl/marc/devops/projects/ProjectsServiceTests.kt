@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import nl.marc.devops.accounts.User
 import nl.marc.devops.fixtures.UsersFixture
 import kotlin.test.*
 
