@@ -211,6 +211,140 @@ class TaskTests {
     }
 
     @Test
+    fun `AD-134, AD-143) A planned task should not be able to move to tested`() {
+        // Arrange
+        val task = Task()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.testingSucceeded()
+        }
+    }
+
+    @Test
+    fun `AD-134, AD-144) A task in development should not be able to move to tested`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.testingSucceeded()
+        }
+    }
+
+    @Test
+    fun `AD-134, AD-145) A planned task should not be able to move to done`() {
+        // Arrange
+        val task = Task()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.passesDefinitionOfDone()
+        }
+    }
+
+    @Test
+    fun `AD-134, AD-146) A task in development should not be able to move to done`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.passesDefinitionOfDone()
+        }
+    }
+
+    @Test
+    fun `AD-134, AD-147) A task ready for testing should not be able to move to done`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+        task.setDevelopmentCompleted()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.passesDefinitionOfDone()
+        }
+    }
+
+    @Test
+    fun `AD-134, AD-148) A task that is being tested should not be able to move to done`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+        task.setDevelopmentCompleted()
+        task.setTestingInProgress()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.passesDefinitionOfDone()
+        }
+    }
+
+    @Test
+    fun `AD-149, AD-150) A task that is being tested should not be able to move back to in development`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+        task.setDevelopmentCompleted()
+        task.setTestingInProgress()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.startDevelopment()
+        }
+    }
+
+    @Test
+    fun `AD-149, AD-151) A task that has been tested should not be able to move back to in development`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+        task.setDevelopmentCompleted()
+        task.setTestingInProgress()
+        task.testingSucceeded()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.startDevelopment()
+        }
+    }
+
+    @Test
+    fun `AD-149, AD-152) A task that has been completed should not be able to move back to testing`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+        task.setDevelopmentCompleted()
+        task.setTestingInProgress()
+        task.testingSucceeded()
+        task.passesDefinitionOfDone()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.setTestingInProgress()
+        }
+    }
+
+    @Test
+    fun `AD-149, AD-153) A task that has been completed should not be able to move back to in development`() {
+        // Arrange
+        val task = Task()
+        task.startDevelopment()
+        task.setDevelopmentCompleted()
+        task.setTestingInProgress()
+        task.testingSucceeded()
+        task.passesDefinitionOfDone()
+
+        // Act & Assert
+        assertFailsWith<IllegalStateException> {
+            task.startDevelopment()
+        }
+    }
+
+    @Test
     fun `AD-20, AD-138) Observers should be notified when a task is added to ready for testing`() {
         // Arrange
         val task = Task()
