@@ -28,4 +28,44 @@ class Sprint {
         val beginDate: Date,
         val endDate: Date
     )
+
+    class Builder {
+        var scrumMaster: User? = null
+            private set
+
+        var sprintName: String? = null
+            private set
+
+        var beginDate: Date? = null
+            private set
+
+        var endDate: Date? = null
+            private set
+
+        fun setScrumMaster(scrumMaster: User): Builder {
+            this.scrumMaster = scrumMaster
+            return this
+        }
+
+        fun setSprintName(sprintName: String): Builder {
+            this.sprintName = sprintName
+            return this
+        }
+
+        fun setBeginDate(beginDate: Date): Builder {
+            this.beginDate = beginDate
+            return this
+        }
+
+        fun setEndDate(endDate: Date): Builder {
+            this.endDate = endDate
+            return this
+        }
+
+        fun build(): Sprint {
+            return Sprint().apply {
+                sprintInfo = Information(scrumMaster!!, sprintName!!, beginDate!!, endDate!!)
+            }
+        }
+    }
 }

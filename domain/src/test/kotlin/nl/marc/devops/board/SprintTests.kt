@@ -263,4 +263,49 @@ class SprintTests {
             sprint.startSprint()
         }
     }
+
+    @Test
+    fun `AD-14, AD-113) When adding sprint information in the sprint builder, the info should be readable when a sprint is still planned`() {
+        // Arrange
+        val scrumMaster = UsersFixture.defaultUser
+        val sprintName = "Sprint 1"
+        val sprint = Sprint.Builder()
+            .setScrumMaster(scrumMaster)
+            .setSprintName(sprintName)
+            .setBeginDate(Date())
+            .setEndDate(Date())
+            .build()
+
+        // Act
+        val info = sprint.sprintInfo
+
+        // Assert
+        assertNotNull(info)
+        assertEquals(info.scrumMaster, scrumMaster)
+        assertEquals(info.name, sprintName)
+    }
+
+    @Test
+    fun `AD-14, AD-113) Missing the scrum master in the builder causes a NullPointerException`() {
+        // Arrange
+        val sprintBuilder = Sprint.Builder()
+            .setSprintName("Sprint 2")
+
+        // Act & Assert
+        assertFailsWith<NullPointerException> {
+            sprintBuilder.build()
+        }
+    }
+
+    @Test
+    fun `AD-14, AD-113) Missing the sprint name in the builder causes a NullPointerException`() {
+        // Arrange
+        val sprintBuilder = Sprint.Builder()
+            .setScrumMaster(UsersFixture.defaultUser)
+
+        // Act & Assert
+        assertFailsWith<NullPointerException> {
+            sprintBuilder.build()
+        }
+    }
 }

@@ -18,7 +18,7 @@ class Task : Observable<TaskStateObserver> {
 
     val swimlane: String by state::swimlane
 
-    private  var observers = mutableListOf<TaskStateObserver>()
+    private var observers = mutableListOf<TaskStateObserver>()
 
     internal fun notifyTaskMovedBack(oldRole: Role, newRole: Role) {
         for (observer in observers) {
