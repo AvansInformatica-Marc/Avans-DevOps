@@ -7,7 +7,7 @@ class FinishedSprintState(
     private val sprint: Sprint,
     override val tasks: Set<Task>,
     private val _sprintInfo: Sprint.Information
-) : SprintState() {
+) : SprintState {
     override var sprintInfo: Sprint.Information?
         get() = _sprintInfo
         set(_) {
