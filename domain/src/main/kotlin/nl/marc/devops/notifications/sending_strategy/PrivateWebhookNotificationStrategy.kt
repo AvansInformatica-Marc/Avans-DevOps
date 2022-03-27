@@ -4,7 +4,10 @@ import nl.marc.devops.notifications.sending_apis.WebhookSender
 
 class PrivateWebhookNotificationStrategy(webhookSender: WebhookSender) : WebhookNotificationStrategy(webhookSender) {
     override fun buildMessage(content: String, subject: String, recipient: String): String {
-        return "{\"subject\": \"${subject}\", \"content\": ${content}\"}"
+        return "<message>\n" +
+                "  <subject>$subject</subject>\n" +
+                "  <content>$content</content>\n" +
+                "</message>"
     }
 
     override fun getWebhookUrl(recipient: String): String {
