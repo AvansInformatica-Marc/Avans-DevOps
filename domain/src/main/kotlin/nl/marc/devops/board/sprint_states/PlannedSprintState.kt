@@ -3,7 +3,7 @@ package nl.marc.devops.board.sprint_states
 import nl.marc.devops.board.Sprint
 import nl.marc.devops.board.Task
 
-class PlannedSprintState(private val sprint: Sprint) : SprintState() {
+class PlannedSprintState(private val sprint: Sprint) : SprintState {
     override var sprintInfo: Sprint.Information? = null
 
     override val tasks = mutableSetOf<Task>()
