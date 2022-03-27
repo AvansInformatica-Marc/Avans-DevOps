@@ -1,5 +1,9 @@
 package nl.marc.devops.board
 
-interface Observable<T> {
-    fun addObserver(observer: T)
+abstract class Observable<T> {
+    protected val observers = mutableSetOf<T>()
+
+    fun addObserver(observer: T) {
+        observers += observer
+    }
 }
