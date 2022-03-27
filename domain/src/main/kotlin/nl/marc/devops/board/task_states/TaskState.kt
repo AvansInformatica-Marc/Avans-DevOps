@@ -7,10 +7,6 @@ abstract class TaskState {
 
     abstract val swimlane: String
 
-    open fun markAsPlanned() {
-        throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
-    }
-
     open fun startDevelopment() {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }

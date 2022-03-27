@@ -30,10 +30,6 @@ class Task : Observable<TaskStateObserver>() {
         }
     }
 
-    fun markAsPlanned() {
-        state.markAsPlanned()
-    }
-
     fun startDevelopment() {
         state.startDevelopment()
     }
