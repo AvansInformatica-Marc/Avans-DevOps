@@ -1,11 +1,9 @@
 package nl.marc.devops.board.notifiers
 
-import nl.marc.devops.board.Task
 import nl.marc.devops.board.TaskStateChange
 import nl.marc.devops.board.TaskStateObserver
 import nl.marc.devops.notifications.NotificationService
 import nl.marc.devops.projects.GetUserByRoleService
-import nl.marc.devops.projects.Role
 
 class NewTaskNotifier(
     private val getUserByRoleService: GetUserByRoleService,
