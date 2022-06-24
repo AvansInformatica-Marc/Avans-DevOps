@@ -1,6 +1,7 @@
 package nl.marc.devops.board
 
 import nl.marc.devops.accounts.User
+import nl.marc.devops.board.task_states.CompletedTaskState
 import nl.marc.devops.board.task_states.TaskState
 import nl.marc.devops.board.task_states.TaskStateFactory
 import nl.marc.devops.projects.Role
@@ -20,6 +21,9 @@ class Task : TaskStateObservable() {
     val associatedRole: Role by state::associatedRole
 
     val swimlane: String by state::swimlane
+
+    val isComplete: Boolean
+        get() = state is CompletedTaskState
 
     fun startDevelopment() {
         state.startDevelopment()
