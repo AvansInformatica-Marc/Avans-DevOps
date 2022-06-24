@@ -4,6 +4,7 @@ import nl.marc.devops.accounts.User
 import nl.marc.devops.board.task_states.TaskState
 import nl.marc.devops.board.task_states.TaskStateFactory
 import nl.marc.devops.projects.Role
+import java.util.*
 
 class Task : TaskStateObservable() {
     internal val taskStateFactory = TaskStateFactory(this)
@@ -13,6 +14,8 @@ class Task : TaskStateObservable() {
     var title: String? = null
 
     var developer: User? = null
+
+    var id: UUID = UUID.randomUUID()
 
     val associatedRole: Role by state::associatedRole
 
