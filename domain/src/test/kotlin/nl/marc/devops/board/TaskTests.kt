@@ -350,14 +350,18 @@ class TaskTests {
         val task = Task()
         task.startDevelopment()
         val observer = mockk<TaskStateObserver>()
-        justRun { observer.onTaskChangedAssignment(any(), any()) }
+        justRun { observer.notify(any()) }
         task.addObserver(observer)
 
         // Act
         task.setPlannedForTesting()
 
         // Assert
-        verify(exactly = INVOCATION_KIND_ONCE) { observer.onTaskChangedAssignment(any(), Role.TESTER) }
+        verify(exactly = INVOCATION_KIND_ONCE) {
+            observer.notify(match {
+                it.newRole == Role.TESTER && !it.wasMovedBack
+            })
+        }
     }
 
     @Test
@@ -368,15 +372,18 @@ class TaskTests {
         task.setPlannedForTesting()
         task.setTestingInProgress()
         val observer = mockk<TaskStateObserver>()
-        justRun { observer.onTaskChangedAssignment(any(), any()) }
-        justRun { observer.onTaskMovedBack(any(), any(), any()) }
+        justRun { observer.notify(any()) }
         task.addObserver(observer)
 
         // Act
         task.testingFailed()
 
         // Assert
-        verify(exactly = INVOCATION_KIND_ONCE) { observer.onTaskMovedBack(any(), Role.TESTER, Role.DEVELOPERS) }
+        verify(exactly = INVOCATION_KIND_ONCE) {
+            observer.notify(match {
+                it.oldRole == Role.TESTER && it.newRole == Role.DEVELOPERS && it.wasMovedBack
+            })
+        }
     }
 
     companion object {

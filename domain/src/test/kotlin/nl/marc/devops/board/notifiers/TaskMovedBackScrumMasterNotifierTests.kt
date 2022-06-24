@@ -4,6 +4,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import nl.marc.devops.board.Task
+import nl.marc.devops.board.TaskStateChange
 import nl.marc.devops.fixtures.UsersFixture
 import nl.marc.devops.notifications.NotificationService
 import nl.marc.devops.projects.Role
@@ -24,7 +25,7 @@ class TaskMovedBackScrumMasterNotifierTests {
         task.title = "Test notifications"
 
         // Act
-        notifier.onTaskMovedBack(task, Role.TESTER, Role.DEVELOPERS)
+        notifier.notify(TaskStateChange(task, Role.TESTER, Role.DEVELOPERS, true))
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { notificationService.sendNotification(any(), any(), user) }
