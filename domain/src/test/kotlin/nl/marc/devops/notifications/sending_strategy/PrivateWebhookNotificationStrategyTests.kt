@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class PrivateWebhookNotificationStrategyTests {
     @Test
-    fun `AD-30, AD-104) Private webhook strategy will send notifications with webhook service to recipient`() {
+    fun `FR-1_4) Private webhook strategy will send notifications with webhook service to recipient`() {
         // Arrange
         val recipient = "https://webhook.avans-devops.nl/"
         val webhookService = mockk<WebhookSender>()

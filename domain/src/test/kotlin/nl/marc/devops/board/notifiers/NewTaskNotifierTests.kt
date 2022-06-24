@@ -5,6 +5,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import nl.marc.devops.board.Task
+import nl.marc.devops.board.TaskStateChange
 import nl.marc.devops.fixtures.UsersFixture
 import nl.marc.devops.notifications.NotificationService
 import nl.marc.devops.projects.GetUserByRoleService
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.Test
 
 class NewTaskNotifierTests {
     @Test
-    fun `AD-20, AD-139) Notifications should be sent to all users`() {
+    fun `FR-2_9) Notifications should be sent to all users`() {
         // Arrange
         val getUserByRoleService = mockk<GetUserByRoleService>()
         val users = UsersFixture.generateUsers(2).toSet()
@@ -28,7 +29,7 @@ class NewTaskNotifierTests {
         task.title = "Test notifications"
 
         // Act
-        notifier.onTaskChangedAssignment(task, Role.TESTER)
+        notifier.notify(TaskStateChange(task, null, Role.TESTER, false))
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { getUserByRoleService.getUsersByRole(Role.TESTER) }
@@ -37,7 +38,7 @@ class NewTaskNotifierTests {
     }
 
     @Test
-    fun `AD-20, AD-142) Notifications should be sent to all users when a task is moved back`() {
+    fun `FR-2_9) Notifications should be sent to all users when a task is moved back`() {
         // Arrange
         val getUserByRoleService = mockk<GetUserByRoleService>()
         val users = UsersFixture.generateUsers(2).toSet()
@@ -52,7 +53,7 @@ class NewTaskNotifierTests {
         task.title = "Test notifications"
 
         // Act
-        notifier.onTaskMovedBack(task, Role.DEVELOPERS, Role.TESTER)
+        notifier.notify(TaskStateChange(task, Role.DEVELOPERS, Role.TESTER, true))
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { getUserByRoleService.getUsersByRole(Role.TESTER) }

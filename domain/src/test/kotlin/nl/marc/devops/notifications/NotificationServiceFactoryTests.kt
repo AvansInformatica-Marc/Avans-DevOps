@@ -12,7 +12,7 @@ import kotlin.test.assertIs
 
 class NotificationServiceFactoryTests {
     @Test
-    fun `AD-30, AD-101) createNotificationStrategy will create email strategy when channel has type EMAIL`() {
+    fun `FR-1_4) createNotificationStrategy will create email strategy when channel has type EMAIL`() {
         // Arrange
         val channel = NotificationChannel(EmailNotificationStrategy.CHANNEL_NAME, "notifications@avans-devops.nl")
         val emailSender = mockk<EmailSender>()
@@ -27,7 +27,7 @@ class NotificationServiceFactoryTests {
     }
 
     @Test
-    fun `AD-30, AD-101) createNotificationStrategy will create slack strategy when channel has type SLACK`() {
+    fun `FR-1_4) createNotificationStrategy will create slack strategy when channel has type SLACK`() {
         // Arrange
         val channel = NotificationChannel(SlackNotificationStrategy.CHANNEL_NAME, "slack://avans-devops.nl/#notifications")
         val emailSender = mockk<EmailSender>()
@@ -42,7 +42,7 @@ class NotificationServiceFactoryTests {
     }
 
     @Test
-    fun `AD-30, AD-101) createNotificationStrategy will create a private webhook strategy when channel has type PRIVATE_WEBHOOK`() {
+    fun `FR-1_4) createNotificationStrategy will create a private webhook strategy when channel has type PRIVATE_WEBHOOK`() {
         // Arrange
         val channel = NotificationChannel(PrivateWebhookNotificationStrategy.CHANNEL_NAME, "https://webhook.avans-devops.nl/")
         val emailSender = mockk<EmailSender>()
@@ -57,7 +57,7 @@ class NotificationServiceFactoryTests {
     }
 
     @Test
-    fun `AD-30, AD-102) createNotificationStrategy will throw an error when notification type is invalid`() {
+    fun `FR-1_4) createNotificationStrategy will throw an error when notification type is invalid`() {
         // Arrange
         val channel = NotificationChannel("aojgrsnjsnlvnklv", "avans-devops.nl")
         val emailSender = mockk<EmailSender>()

@@ -5,7 +5,7 @@ import nl.marc.devops.board.task_states.TaskState
 import nl.marc.devops.board.task_states.TaskStateFactory
 import nl.marc.devops.projects.Role
 
-class Task : Observable<TaskStateObserver>() {
+class Task : TaskStateObservable() {
     internal val taskStateFactory = TaskStateFactory(this)
 
     var state: TaskState = taskStateFactory.plannedTask
@@ -17,18 +17,6 @@ class Task : Observable<TaskStateObserver>() {
     val associatedRole: Role by state::associatedRole
 
     val swimlane: String by state::swimlane
-
-    internal fun notifyTaskMovedBack(oldRole: Role, newRole: Role) {
-        for (observer in observers) {
-            observer.onTaskMovedBack(this, oldRole, newRole)
-        }
-    }
-
-    internal fun notifyAssignmentChanged(newAssignedRole: Role) {
-        for (observer in observers) {
-            observer.onTaskChangedAssignment(this, newAssignedRole)
-        }
-    }
 
     fun startDevelopment() {
         state.startDevelopment()

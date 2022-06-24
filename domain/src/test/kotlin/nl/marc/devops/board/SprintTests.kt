@@ -8,7 +8,7 @@ import kotlin.test.*
 
 class SprintTests {
     @Test
-    fun `AD-5, AD-105) Tasks should be readable in a planned sprint state`() {
+    fun `FR-2_6) Tasks should be readable in a planned sprint state`() {
         // Arrange
         val sprint = Sprint()
         val task = Task()
@@ -24,7 +24,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-5, AD-106) Tasks should be readable in a running sprint state`() {
+    fun `FR-2_6) Tasks should be readable in a running sprint state`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -42,7 +42,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-5, AD-107) Tasks should be readable in a completed sprint state`() {
+    fun `FR-2_6) Tasks should be readable in a completed sprint state`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -61,7 +61,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-14, AD-113) When adding sprint information, the info should be readable when a sprint is still planned`() {
+    fun `FR-2_6) When adding sprint information, the info should be readable when a sprint is still planned`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -75,7 +75,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-14, AD-114) When adding sprint information, the info should be readable when a sprint is running`() {
+    fun `FR-2_6) When adding sprint information, the info should be readable when a sprint is running`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -90,7 +90,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-14, AD-115) When adding sprint information, the info should be readable when a sprint is finished`() {
+    fun `FR-2_6) When adding sprint information, the info should be readable when a sprint is finished`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -107,7 +107,7 @@ class SprintTests {
 
 
     @Test
-    fun `AD-8, AD-108) Adding backlog items to planned sprints should not cause a crash`() {
+    fun `FR-2_6) Adding backlog items to planned sprints should not cause a crash`() {
         // Arrange
         val sprint = Sprint()
         val task = Task()
@@ -123,7 +123,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-16, AD-116) Adding sprint information to planned sprints should not cause a crash`() {
+    fun `FR-2_6) Adding sprint information to planned sprints should not cause a crash`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -136,7 +136,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-17, AD-111) When adding backlog items to running sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) When adding backlog items to running sprints should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -151,7 +151,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-16, AD-117) When adding sprint information to running sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) When adding sprint information to running sprints should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -166,7 +166,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-17, AD-112) When adding backlog items to finished sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) When adding backlog items to finished sprints should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -182,7 +182,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-16, AD-118) When adding sprint information to finished sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) When adding sprint information to finished sprints should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -198,7 +198,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-31, AD-119) A sprint should be able to start and finish`() {
+    fun `FR-2_6) A sprint should be able to start and finish`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -212,7 +212,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-31, AD-122) Closing a planned sprint should throw an IllegalStateException`() {
+    fun `FR-2_7) Closing a planned sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -224,7 +224,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-31, AD-120) Opening a closed sprint should throw an IllegalStateException`() {
+    fun `FR-2_7) Opening a closed sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -238,7 +238,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-31, AD-123) Closing a closed sprint should throw an IllegalStateException`() {
+    fun `FR-2_7) Closing a closed sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -252,7 +252,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-31, AD-123) Starting a running sprint should throw an IllegalStateException`() {
+    fun `FR-2_6) Starting a running sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -265,7 +265,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-14, AD-113) When adding sprint information in the sprint builder, the info should be readable when a sprint is still planned`() {
+    fun `FR-2_5) When adding sprint information in the sprint builder, the info should be readable when a sprint is still planned`() {
         // Arrange
         val scrumMaster = UsersFixture.defaultUser
         val sprintName = "Sprint 1"
@@ -286,7 +286,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-14, AD-113) Missing the scrum master in the builder causes a NullPointerException`() {
+    fun `FR-2_5) Missing the scrum master in the builder causes a NullPointerException`() {
         // Arrange
         val sprintBuilder = Sprint.Builder()
             .setSprintName("Sprint 2")
@@ -298,7 +298,7 @@ class SprintTests {
     }
 
     @Test
-    fun `AD-14, AD-113) Missing the sprint name in the builder causes a NullPointerException`() {
+    fun `FR-2_5) Missing the sprint name in the builder causes a NullPointerException`() {
         // Arrange
         val sprintBuilder = Sprint.Builder()
             .setScrumMaster(UsersFixture.defaultUser)
