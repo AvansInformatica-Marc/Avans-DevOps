@@ -30,6 +30,7 @@ class TaskMovedBackScrumMasterNotifierTests {
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { notificationService.sendNotification(any(), any(), user) }
     }
+
     @Test
     fun `FR-1_10) The scrum master should not be notified when a task has been moved forward`() {
         // Arrange
@@ -48,6 +49,26 @@ class TaskMovedBackScrumMasterNotifierTests {
 
         // Assert
         verify(exactly = INVOCATION_KIND_NEVER) { notificationService.sendNotification(any(), any(), user) }
+    }
+
+    @Test
+    fun `FR-1_10) The scrum master should be notified when a task has been moved backward and does not have an origin role assigned`() {
+        // Arrange
+        val user = UsersFixture.defaultUser
+
+        val notificationService = mockk<NotificationService>()
+        justRun { notificationService.sendNotification(any(), any(), any()) }
+
+        val notifier = TaskMovedBackScrumMasterNotifier(user, notificationService)
+
+        val task = Task()
+        task.title = "Test notifications"
+
+        // Act
+        notifier.notify(TaskStateChange(task, null, Role.DEVELOPERS, true))
+
+        // Assert
+        verify(exactly = INVOCATION_KIND_ONCE) { notificationService.sendNotification(any(), any(), user) }
     }
 
     companion object {
