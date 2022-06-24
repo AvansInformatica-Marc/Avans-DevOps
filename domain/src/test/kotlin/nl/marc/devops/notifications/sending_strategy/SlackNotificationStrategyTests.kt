@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class SlackNotificationStrategyTests {
     @Test
-    fun `AD-30, AD-104) Slack strategy will send notifications with webhook service to recipient`() {
+    fun `FR-1_4) Slack strategy will send notifications with webhook service to recipient`() {
         // Arrange
         val recipient = "avans-devops#notifications"
         val destinationUrl = "${SlackNotificationStrategy.BASE_URL}$recipient"

@@ -10,7 +10,7 @@ import kotlin.test.Test
 
 class NotificationServiceImplTests {
     @Test
-    fun `AD-30, AD-101) When adding a notification channel, the repository gets updated`() {
+    fun `FR-1_4) When adding a notification channel, the repository gets updated`() {
         // Arrange
         val user = UsersFixture.defaultUser
         val channel = NotificationChannel("EMAIL", "notifications@avans-devops.nl")
@@ -27,7 +27,7 @@ class NotificationServiceImplTests {
     }
 
     @Test
-    fun `AD-30, AD-100) When adding multiple notification channels, the repository gets updated`() {
+    fun `FR-1_4) When adding multiple notification channels, the repository gets updated`() {
         // Arrange
         val user = UsersFixture.defaultUser
         val emailChannel = NotificationChannel("EMAIL", "notifications@avans-devops.nl")
@@ -45,7 +45,7 @@ class NotificationServiceImplTests {
     }
 
     @Test
-    fun `AD-30, AD-101) When sending a notification to a single channel, sendNotification will be called`() {
+    fun `FR-1_4) When sending a notification to a single channel, sendNotification will be called`() {
         // Arrange
         val user = UsersFixture.defaultUser
         val recipient = "notifications@avans-devops.nl"
@@ -69,7 +69,7 @@ class NotificationServiceImplTests {
     }
 
     @Test
-    fun `AD-30, AD-101) When sending a notification to a multiple channels, sendNotification will be called multiple times`() {
+    fun `FR-1_4) When sending a notification to a multiple channels, sendNotification will be called multiple times`() {
         // Arrange
         val user = UsersFixture.defaultUser
         val emailRecipient = "notifications@avans-devops.nl"
@@ -100,7 +100,7 @@ class NotificationServiceImplTests {
     }
 
     @Test
-    fun `AD-30, AD-102) When no users have channels set up, the service should stop quietly`() {
+    fun `FR-1_4) When no users have channels set up, the service should stop quietly`() {
         // Arrange
         val user = UsersFixture.defaultUser
         val repository = mockk<NotificationsRepository>()

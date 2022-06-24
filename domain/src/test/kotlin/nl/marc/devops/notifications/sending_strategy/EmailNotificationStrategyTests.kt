@@ -8,7 +8,7 @@ import kotlin.test.Test
 
 class EmailNotificationStrategyTests {
     @Test
-    fun `AD-30, AD-103) Email strategy will send notifications with email service to recipient`() {
+    fun `FR-1_4) Email strategy will send notifications with email service to recipient`() {
         // Arrange
         val recipient = "notifications@avans-devops.nl"
         val emailService = mockk<EmailSender>()

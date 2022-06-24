@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 
 class NewTaskNotifierTests {
     @Test
-    fun `AD-20, AD-139) Notifications should be sent to all users`() {
+    fun `FR-2_9) Notifications should be sent to all users`() {
         // Arrange
         val getUserByRoleService = mockk<GetUserByRoleService>()
         val users = UsersFixture.generateUsers(2).toSet()
@@ -38,7 +38,7 @@ class NewTaskNotifierTests {
     }
 
     @Test
-    fun `AD-20, AD-142) Notifications should be sent to all users when a task is moved back`() {
+    fun `FR-2_9) Notifications should be sent to all users when a task is moved back`() {
         // Arrange
         val getUserByRoleService = mockk<GetUserByRoleService>()
         val users = UsersFixture.generateUsers(2).toSet()

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 
 class TaskMovedBackScrumMasterNotifierTests {
     @Test
-    fun `AD-23, AD-141) Notifications should be sent to the scrum master`() {
+    fun `FR-1_10) Notifications should be sent to the scrum master`() {
         // Arrange
         val user = UsersFixture.defaultUser
 
