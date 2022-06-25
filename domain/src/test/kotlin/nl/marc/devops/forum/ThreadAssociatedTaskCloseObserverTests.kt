@@ -7,6 +7,7 @@ import io.mockk.verify
 import nl.marc.devops.board.Task
 import nl.marc.devops.board.TaskStateChange
 import nl.marc.devops.projects.Role
+import java.util.*
 import kotlin.test.Test
 
 class ThreadAssociatedTaskCloseObserverTests {
@@ -14,7 +15,9 @@ class ThreadAssociatedTaskCloseObserverTests {
     fun `FR-3_2) When a backlog item is completed, the associated thread should be marked as read-only`() {
         // Arrange
         val backlogItem = mockk<Task>()
+        val backlogId = UUID.randomUUID()
         every { backlogItem.isComplete } returns true
+        every { backlogItem.id } returns backlogId
 
         val thread = Thread(backlogItem)
 
@@ -29,7 +32,7 @@ class ThreadAssociatedTaskCloseObserverTests {
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) {
-            threadService.markInactive(thread.id)
+            threadService.markInactive(backlogId)
         }
     }
 
