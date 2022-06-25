@@ -2,7 +2,7 @@ package nl.marc.devops.pipeline
 
 import nl.marc.devops.pipeline.task_runners.RetrieveSourceCodeTask
 import nl.marc.devops.pipeline.task_runners.analysis.GradleAnalysisTask
-import nl.marc.devops.pipeline.task_runners.build.GradleBuildTask
+import nl.marc.devops.pipeline.task_runners.build_tasks.GradleBuildTask
 import nl.marc.devops.pipeline.task_runners.test.GradleTestTask
 
 class AndroidPipelineFactory : ProjectPipelineFactory {

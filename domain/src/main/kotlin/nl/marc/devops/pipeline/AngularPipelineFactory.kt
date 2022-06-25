@@ -2,7 +2,7 @@ package nl.marc.devops.pipeline
 
 import nl.marc.devops.pipeline.task_runners.RetrieveSourceCodeTask
 import nl.marc.devops.pipeline.task_runners.analysis.SonarqubeAnalysisTask
-import nl.marc.devops.pipeline.task_runners.build.NpmBuildTask
+import nl.marc.devops.pipeline.task_runners.build_tasks.NpmBuildTask
 import nl.marc.devops.pipeline.task_runners.release.AzureReleaseTask
 import nl.marc.devops.pipeline.task_runners.release.HerokuReleaseTask
 import nl.marc.devops.pipeline.task_runners.test.NpmTestTask
