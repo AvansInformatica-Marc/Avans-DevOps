@@ -1,3 +1,9 @@
 package nl.marc.devops.notifications
 
-data class NotificationChannel(val channelName: String, val recipient: String)
+import java.util.*
+
+data class NotificationChannel(
+    val channelName: String,
+    val recipient: String,
+    val id: UUID = UUID.randomUUID()
+)

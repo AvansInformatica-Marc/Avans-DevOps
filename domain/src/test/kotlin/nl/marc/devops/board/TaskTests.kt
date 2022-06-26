@@ -6,10 +6,7 @@ import io.mockk.verify
 import nl.marc.devops.board.task_states.*
 import nl.marc.devops.fixtures.UsersFixture
 import nl.marc.devops.projects.Role
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertIs
+import kotlin.test.*
 
 class TaskTests {
     @Test
@@ -323,6 +320,7 @@ class TaskTests {
         task.passesDefinitionOfDone()
 
         // Act & Assert
+        assertTrue(task.isComplete)
         assertFailsWith<IllegalStateException> {
             task.setTestingInProgress()
         }
@@ -339,6 +337,7 @@ class TaskTests {
         task.passesDefinitionOfDone()
 
         // Act & Assert
+        assertTrue(task.isComplete)
         assertFailsWith<IllegalStateException> {
             task.startDevelopment()
         }
