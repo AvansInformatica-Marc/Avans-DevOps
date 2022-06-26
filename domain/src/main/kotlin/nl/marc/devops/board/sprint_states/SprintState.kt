@@ -3,18 +3,28 @@ package nl.marc.devops.board.sprint_states
 import nl.marc.devops.board.Sprint
 import nl.marc.devops.board.Task
 
-interface SprintState {
-    var sprintInfo: Sprint.Information?
+abstract class SprintState {
+    abstract var sprintInfo: Sprint.Information?
 
-    val tasks: Set<Task>
+    abstract val tasks: Set<Task>
 
-    fun addTask(task: Task)
+    open fun addTask(task: Task) {
+        throw IllegalStateException("Can't add tasks to running sprints")
+    }
 
-    fun startSprint()
+    open fun startSprint() {
+        throw IllegalStateException("Can't start a sprint that was already started")
+    }
 
-    fun markFinished()
+    open fun markFinished() {
+        throw IllegalStateException("Sprint should be running to cancel it")
+    }
 
-    fun onPipelineCompleted()
+    open fun onPipelineCompleted() {
+        throw IllegalStateException("Can't complete pipeline in this state")
+    }
 
-    fun onDocumentAttached()
+    open fun onDocumentAttached() {
+        throw IllegalStateException("Can't add documents in this state")
+    }
 }
