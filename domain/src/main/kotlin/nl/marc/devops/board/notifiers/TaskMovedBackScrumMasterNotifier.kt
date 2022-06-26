@@ -11,8 +11,14 @@ class TaskMovedBackScrumMasterNotifier(
 ) : TaskStateObserver {
     override fun notify(taskStateChange: TaskStateChange) {
         if (taskStateChange.wasMovedBack) {
+            val message = if (taskStateChange.oldRole == null) {
+                "Task \"${taskStateChange.task.title}\" moved to ${taskStateChange.newRole.name}."
+            } else {
+                "Task \"${taskStateChange.task.title}\" moved from ${taskStateChange.oldRole.name} to ${taskStateChange.newRole.name}."
+            }
+            
             notificationService.sendNotification(
-                "Task \"${taskStateChange.task.title}\" moved from ${taskStateChange.oldRole?.name ?: "unknown"} to ${taskStateChange.newRole.name}.",
+                message,
                 "Task moved back",
                 scrumMaster
             )
