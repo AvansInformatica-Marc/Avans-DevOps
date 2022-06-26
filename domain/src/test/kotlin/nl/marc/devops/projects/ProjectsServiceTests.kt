@@ -46,7 +46,7 @@ class ProjectsServiceTests {
     }
 
     @Test
-    fun `FR-1_3) When a project has a product owner assigned, addUserToProject with product owner role should throw error`() {
+    fun `FR-1_5, 1) When a project has a product owner assigned, addUserToProject with product owner role should throw error`() {
         // Arrange
         val users = UsersFixture.generateUsers(2)
         val project = Project("MyTestProject", mutableMapOf(users[0] to Role.PRODUCT_OWNER))
@@ -78,7 +78,7 @@ class ProjectsServiceTests {
     }
 
     @Test
-    fun `FR-1_5) When a project has no lead developer assigned, addUserToProject should update repository`() {
+    fun `FR-1_5, 4) When a project has no lead developer assigned, addUserToProject should update repository`() {
         // Arrange
         val users = UsersFixture.generateUsers(2)
         val project = Project("MyTestProject", mutableMapOf(users[0] to Role.PRODUCT_OWNER))
@@ -97,7 +97,7 @@ class ProjectsServiceTests {
     }
 
     @Test
-    fun `FR-1_5) When a project has a lead developer assigned, addUserToProject with lead developer role should throw error`() {
+    fun `FR-1_5, 3) When a project has a lead developer assigned, addUserToProject with lead developer role should throw error`() {
         // Arrange
         val users = UsersFixture.generateUsers(2)
         val project = Project("MyTestProject", mutableMapOf(users[0] to Role.LEAD_DEVELOPER))
@@ -132,7 +132,7 @@ class ProjectsServiceTests {
     }
 
     @Test
-    fun `FR-1_5) Multiple developers and testers can be added to a project`() {
+    fun `FR-1_5, 2) Multiple developers and testers can be added to a project`() {
         // Arrange
         val users = UsersFixture.generateUsers(5)
         val project = Project("MyTestProject")
