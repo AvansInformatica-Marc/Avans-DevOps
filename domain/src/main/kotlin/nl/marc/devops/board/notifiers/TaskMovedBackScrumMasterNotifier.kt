@@ -16,7 +16,7 @@ class TaskMovedBackScrumMasterNotifier(
             } else {
                 "Task \"${taskStateChange.task.title}\" moved from ${taskStateChange.oldRole.name} to ${taskStateChange.newRole.name}."
             }
-            
+
             notificationService.sendNotification(
                 message,
                 "Task moved back",
