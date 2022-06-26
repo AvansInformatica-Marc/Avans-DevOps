@@ -61,7 +61,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) When adding sprint information, the info should be readable when a sprint is still planned`() {
+    fun `FR-2_6) Sprint information should be readable when a sprint is in a started state`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -75,7 +75,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) When adding sprint information, the info should be readable when a sprint is running`() {
+    fun `FR-2_6) Sprint information should be readable when a sprint is in a running state`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -90,7 +90,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) When adding sprint information, the info should be readable when a sprint is finished`() {
+    fun `FR-2_6) Sprint information should be readable when a sprint is in a finished state`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -107,7 +107,7 @@ class SprintTests {
 
 
     @Test
-    fun `FR-2_6) Adding backlog items to planned sprints should not cause a crash`() {
+    fun `FR-2_6) Adding backlog items should not cause a crash when a sprint is in a started state`() {
         // Arrange
         val sprint = Sprint()
         val task = Task()
@@ -123,7 +123,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) Adding sprint information to planned sprints should not cause a crash`() {
+    fun `FR-2_6) Sprint information should be writeable when a sprint is in a started state`() {
         // Arrange
         val sprint = Sprint()
         val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
@@ -136,7 +136,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) When adding backlog items to running sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) Adding backlog items should throw an IllegalStateException when a sprint is in a running state`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -151,7 +151,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) When adding sprint information to running sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) Changing sprint information should throw an IllegalStateException when a sprint is in a running state`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -166,7 +166,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) When adding backlog items to finished sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) Adding backlog items should throw an IllegalStateException when a sprint is in a finished state`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
@@ -182,7 +182,7 @@ class SprintTests {
     }
 
     @Test
-    fun `FR-2_6) When adding sprint information to finished sprints should throw an IllegalStateException`() {
+    fun `FR-2_6) Changing sprint information should throw an IllegalStateException when a sprint is in a finished state`() {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
