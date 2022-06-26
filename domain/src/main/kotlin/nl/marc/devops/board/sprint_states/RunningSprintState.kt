@@ -25,4 +25,12 @@ class RunningSprintState(
     override fun markFinished() {
         sprint.state = FinishedSprintState(sprint, tasks, sprintInfo!!)
     }
+
+    override fun onPipelineCompleted() {
+        throw IllegalStateException("Can't complete sprint that has not finished yet")
+    }
+
+    override fun onDocumentAttached() {
+        throw IllegalStateException("Can't complete sprint that has not finished yet")
+    }
 }

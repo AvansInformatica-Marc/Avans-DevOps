@@ -22,6 +22,10 @@ class Sprint {
 
     fun markFinished() = state.markFinished()
 
+    fun onPipelineCompleted() = state.onPipelineCompleted()
+
+    fun onDocumentAttached() = state.onDocumentAttached()
+
     data class Information(
         val scrumMaster: User,
         val name: String,

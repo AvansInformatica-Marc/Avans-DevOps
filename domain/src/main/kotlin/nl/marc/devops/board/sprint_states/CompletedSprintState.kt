@@ -3,7 +3,7 @@ package nl.marc.devops.board.sprint_states
 import nl.marc.devops.board.Sprint
 import nl.marc.devops.board.Task
 
-class FinishedSprintState(
+class CompletedSprintState(
     private val sprint: Sprint,
     override val tasks: Set<Task>,
     private val _sprintInfo: Sprint.Information
@@ -27,10 +27,10 @@ class FinishedSprintState(
     }
 
     override fun onPipelineCompleted() {
-        sprint.state = CompletedSprintState(sprint, tasks, sprintInfo!!)
+        throw IllegalStateException("Sprint has already finished")
     }
 
     override fun onDocumentAttached() {
-        sprint.state = CompletedSprintState(sprint, tasks, sprintInfo!!)
+        throw IllegalStateException("Sprint has already finished")
     }
 }

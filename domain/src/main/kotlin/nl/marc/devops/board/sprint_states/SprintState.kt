@@ -13,4 +13,8 @@ interface SprintState {
     fun startSprint()
 
     fun markFinished()
+
+    fun onPipelineCompleted()
+
+    fun onDocumentAttached()
 }

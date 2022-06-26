@@ -19,4 +19,12 @@ class PlannedSprintState(private val sprint: Sprint) : SprintState {
     override fun markFinished() {
         throw IllegalStateException("Can't complete sprint that has not started yet")
     }
+
+    override fun onPipelineCompleted() {
+        throw IllegalStateException("Can't complete sprint that has not started yet")
+    }
+
+    override fun onDocumentAttached() {
+        throw IllegalStateException("Can't complete sprint that has not started yet")
+    }
 }
