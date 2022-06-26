@@ -3,7 +3,7 @@ package nl.marc.devops.board
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
-import nl.marc.devops.board.task_states.*
+import nl.marc.devops.board.task_states.CompletedTaskState
 import nl.marc.devops.fixtures.UsersFixture
 import nl.marc.devops.projects.Role
 import kotlin.test.*
@@ -24,117 +24,65 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) The default task state should be planned`() {
-        // Arrange/Act
-        val task = Task()
-
-        // Assert
-        assertIs<PlannedTaskState>(task.state)
-    }
-
-    @Test
-    fun `FR-2_8) Tasks are movable from planned to in development`() {
+    fun `FR-2_8, 1) A test should be able to move from planned to done when it is never passed back`() {
         // Arrange
         val task = Task()
 
         // Act
-        task.startDevelopment()
-
-        // Assert
-        assertIs<InDevelopmentTaskState>(task.state)
-    }
-
-    @Test
-    fun `FR-2_8) Tasks are movable from in development to ready for testing`() {
-        // Arrange
-        val task = Task()
-        task.startDevelopment()
-
-        // Act
-        task.setDevelopmentCompleted()
-
-        // Assert
-        assertIs<ReadyForTestingTaskState>(task.state)
-    }
-
-    @Test
-    fun `FR-2_8) Tasks are movable from ready for testing to testing`() {
-        // Arrange
-        val task = Task()
-        task.startDevelopment()
-        task.setPlannedForTesting()
-
-        // Act
-        task.setTestingInProgress()
-
-        // Assert
-        assertIs<TestingInProgressTaskState>(task.state)
-    }
-
-    @Test
-    fun `FR-2_8) Tasks are movable from testing to tested`() {
-        // Arrange
-        val task = Task()
-        task.startDevelopment()
-        task.setPlannedForTesting()
-        task.setTestingInProgress()
-
-        // Act
-        task.testingSucceeded()
-
-        // Assert
-        assertIs<TestingCompleteTaskState>(task.state)
-    }
-
-    @Test
-    fun `FR-2_8) Tasks are movable from tested to done when passing the DoD`() {
-        // Arrange
-        val task = Task()
         task.startDevelopment()
         task.setPlannedForTesting()
         task.setTestingInProgress()
         task.testingSucceeded()
-
-        // Act
         task.passesDefinitionOfDone()
 
         // Assert
         assertIs<CompletedTaskState>(task.state)
+        assertTrue(task.isComplete)
     }
 
     @Test
-    fun `FR-2_8) Tasks where testing is in progress should be able to fail and move back to planned for development`() {
+    fun `FR-2_8, 2) A test should be able to move from planned to done even when it fails testing once`() {
         // Arrange
         val task = Task()
+
+        // Act
         task.startDevelopment()
         task.setPlannedForTesting()
         task.setTestingInProgress()
-
-        // Act
         task.testingFailed()
+        task.startDevelopment()
+        task.setDevelopmentCompleted()
+        task.setTestingInProgress()
+        task.testingSucceeded()
+        task.passesDefinitionOfDone()
 
         // Assert
-        assertIs<PlannedTaskState>(task.state)
+        assertIs<CompletedTaskState>(task.state)
+        assertTrue(task.isComplete)
     }
 
     @Test
-    fun `FR-2_8) Tasks are movable from tested to ready for testing when failing the DoD`() {
+    fun `FR-2_8, 3) A test should be able to move from planned to done even when it fails the DoD once`() {
         // Arrange
         val task = Task()
+
+        // Act
         task.startDevelopment()
         task.setPlannedForTesting()
         task.setTestingInProgress()
         task.testingSucceeded()
-
-        // Act
         task.failedDefinitionOfDone()
+        task.setTestingInProgress()
+        task.testingSucceeded()
+        task.passesDefinitionOfDone()
 
         // Assert
-        assertIs<ReadyForTestingTaskState>(task.state)
+        assertIs<CompletedTaskState>(task.state)
+        assertTrue(task.isComplete)
     }
 
     @Test
-    fun `FR-2_8) When a task is still planned, it should not be movable to done`() {
+    fun `FR-2_8, 4) When a task is still planned, it should not be movable to done`() {
         // Arrange
         val task = Task()
 
@@ -145,7 +93,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) When a task is still in progress, it should not be movable to done`() {
+    fun `FR-2_8, 5) When a task is still in progress, it should not be movable to done`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -157,7 +105,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) When a task is still ready for testing, it should not be movable to done`() {
+    fun `FR-2_8, 6) When a task is still ready for testing, it should not be movable to done`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -170,7 +118,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) When a task is still being tested, it should not be movable to done`() {
+    fun `FR-2_8, 7) When a task is still being tested, it should not be movable to done`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -184,7 +132,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A planned task should not be able to move to ready for testing`() {
+    fun `FR-2_8, 8) A planned task should not be able to move to ready for testing`() {
         // Arrange
         val task = Task()
 
@@ -195,7 +143,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A task ready for testing should not be able to move to tested`() {
+    fun `FR-2_8, 9) A task ready for testing should not be able to move to tested`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -208,7 +156,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A planned task should not be able to move to tested`() {
+    fun `FR-2_8, 10) A planned task should not be able to move to tested`() {
         // Arrange
         val task = Task()
 
@@ -219,7 +167,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A task in development should not be able to move to tested`() {
+    fun `FR-2_8, 11) A task in development should not be able to move to tested`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -231,57 +179,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A planned task should not be able to move to done`() {
-        // Arrange
-        val task = Task()
-
-        // Act & Assert
-        assertFailsWith<IllegalStateException> {
-            task.passesDefinitionOfDone()
-        }
-    }
-
-    @Test
-    fun `FR-2_8) A task in development should not be able to move to done`() {
-        // Arrange
-        val task = Task()
-        task.startDevelopment()
-
-        // Act & Assert
-        assertFailsWith<IllegalStateException> {
-            task.passesDefinitionOfDone()
-        }
-    }
-
-    @Test
-    fun `FR-2_8) A task ready for testing should not be able to move to done`() {
-        // Arrange
-        val task = Task()
-        task.startDevelopment()
-        task.setDevelopmentCompleted()
-
-        // Act & Assert
-        assertFailsWith<IllegalStateException> {
-            task.passesDefinitionOfDone()
-        }
-    }
-
-    @Test
-    fun `FR-2_8) A task that is being tested should not be able to move to done`() {
-        // Arrange
-        val task = Task()
-        task.startDevelopment()
-        task.setDevelopmentCompleted()
-        task.setTestingInProgress()
-
-        // Act & Assert
-        assertFailsWith<IllegalStateException> {
-            task.passesDefinitionOfDone()
-        }
-    }
-
-    @Test
-    fun `FR-2_8) A task that is being tested should not be able to move back to in development`() {
+    fun `FR-2_8, 12) A task that is being tested should not be able to move back to in development`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -295,7 +193,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A task that has been tested should not be able to move back to in development`() {
+    fun `FR-2_8, 13) A task that has been tested should not be able to move back to in development`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -310,7 +208,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A task that has been completed should not be able to move back to testing`() {
+    fun `FR-2_8, 14) A task that has been completed should not be able to move back to testing`() {
         // Arrange
         val task = Task()
         task.startDevelopment()
@@ -327,7 +225,7 @@ class TaskTests {
     }
 
     @Test
-    fun `FR-2_8) A task that has been completed should not be able to move back to in development`() {
+    fun `FR-2_8, 15) A task that has been completed should not be able to move back to in development`() {
         // Arrange
         val task = Task()
         task.startDevelopment()

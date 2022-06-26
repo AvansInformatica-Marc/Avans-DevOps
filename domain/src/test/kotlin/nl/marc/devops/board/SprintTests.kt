@@ -1,6 +1,7 @@
 package nl.marc.devops.board
 
 import io.mockk.mockk
+import nl.marc.devops.board.sprint_states.CompletedSprintState
 import nl.marc.devops.board.sprint_states.FinishedSprintState
 import nl.marc.devops.fixtures.UsersFixture
 import java.util.*
@@ -209,6 +210,36 @@ class SprintTests {
 
         // Assert
         assertIs<FinishedSprintState>(sprint.state)
+    }
+
+    @Test
+    fun `FR-2_6) A sprint should be able to complete by pipeline when started and finished`() {
+        // Arrange
+        val sprint = Sprint()
+        sprint.sprintInfo = mockk()
+
+        // Act
+        sprint.startSprint()
+        sprint.markFinished()
+        sprint.onPipelineCompleted()
+
+        // Assert
+        assertIs<CompletedSprintState>(sprint.state)
+    }
+
+    @Test
+    fun `FR-2_6) A sprint should be able to complete by document upload when started and finished`() {
+        // Arrange
+        val sprint = Sprint()
+        sprint.sprintInfo = mockk()
+
+        // Act
+        sprint.startSprint()
+        sprint.markFinished()
+        sprint.onDocumentAttached()
+
+        // Assert
+        assertIs<CompletedSprintState>(sprint.state)
     }
 
     @Test

@@ -9,7 +9,7 @@ import kotlin.test.assertFailsWith
 
 class AccountServiceTests {
     @Test
-    fun `FR-1_2) login should return a user when a valid email and password has been supplied`() {
+    fun `FR-1_2, 1) login should return a user when a valid email and password has been supplied`() {
         // Arrange
         val email = "test@avans.nl"
         val password = "MySecretPassword"
@@ -26,7 +26,7 @@ class AccountServiceTests {
     }
 
     @Test
-    fun `FR-1_2) login should throw an error when an invalid email was supplied`() {
+    fun `FR-1_2, 2) login should throw an error when an invalid email was supplied`() {
         // Arrange
         val password = "MySecretPassword"
         val userRepositoryMock = mockk<UserRepository>()
@@ -40,7 +40,7 @@ class AccountServiceTests {
     }
 
     @Test
-    fun `FR-1_3) login should throw an error when an invalid password was supplied`() {
+    fun `FR-1_2, 3) login should throw an error when an invalid password was supplied`() {
         // Arrange
         val email = "test@avans.nl"
         val password = "MySecretPassword"
