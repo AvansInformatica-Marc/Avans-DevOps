@@ -4,18 +4,18 @@ import nl.marc.devops.board.BacklogItem
 import nl.marc.devops.board.BacklogItemStateChange
 import nl.marc.devops.projects.Role
 
-class TestingCompleteBacklogItemState(private val backlogItem: BacklogItem) : BacklogItemState() {
+class TestingCompleteBacklogItemState(private val taskStateFactory: TaskStateFactory) : BacklogItemState() {
     override val associatedRole = Role.DEVELOPERS
 
     override val swimlane = "Tested"
 
-    override fun passesDefinitionOfDone() {
-        backlogItem.state = backlogItem.taskStateFactory.completedTask
-        backlogItem.notify(BacklogItemStateChange(backlogItem, associatedRole, Role.PRODUCT_OWNER, false))
+    override fun passesDefinitionOfDone(context: BacklogItem) {
+        context.state = taskStateFactory.completedTask
+        context.notify(BacklogItemStateChange(context, associatedRole, Role.PRODUCT_OWNER, false))
     }
 
-    override fun failedDefinitionOfDone() {
-        backlogItem.state = backlogItem.taskStateFactory.taskReadyForTesting
-        backlogItem.notify(BacklogItemStateChange(backlogItem, associatedRole, Role.TESTER, true))
+    override fun failedDefinitionOfDone(context: BacklogItem) {
+        context.state = taskStateFactory.taskReadyForTesting
+        context.notify(BacklogItemStateChange(context, associatedRole, Role.TESTER, true))
     }
 }

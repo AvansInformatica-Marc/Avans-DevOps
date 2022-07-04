@@ -8,7 +8,7 @@ import nl.marc.devops.fixtures.UsersFixture
 import nl.marc.devops.projects.Role
 import kotlin.test.*
 
-class BaclogItemTests {
+class BacklogItemTests {
     @Test
     fun `FR-2_3) It should be possible to assign a developer to a task and re-assign it later`() {
         // Arrange
