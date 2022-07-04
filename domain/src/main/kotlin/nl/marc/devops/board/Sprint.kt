@@ -14,9 +14,9 @@ class Sprint {
             state.sprintInfo = value
         }
 
-    val tasks: Set<Task> by state::tasks
+    val backlogItems: Set<BacklogItem> by state::backlogItems
 
-    fun addTask(task: Task) = state.addTask(task)
+    fun addTask(backlogItem: BacklogItem) = state.addTask(backlogItem)
 
     fun startSprint() = state.startSprint()
 

@@ -12,16 +12,16 @@ class SprintTests {
     fun `FR-2_6) Tasks should be readable in a planned sprint state`() {
         // Arrange
         val sprint = Sprint()
-        val task = Task()
-        task.title = "Add backlog"
-        sprint.addTask(task)
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Add backlog"
+        sprint.addTask(backlogItem)
 
         // Act
-        val tasks = sprint.tasks
+        val tasks = sprint.backlogItems
 
         // Assert
         assertEquals(1, tasks.size)
-        assertContains(tasks, task)
+        assertContains(tasks, backlogItem)
     }
 
     @Test
@@ -29,17 +29,17 @@ class SprintTests {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
-        val task = Task()
-        task.title = "Add backlog"
-        sprint.addTask(task)
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Add backlog"
+        sprint.addTask(backlogItem)
         sprint.startSprint()
 
         // Act
-        val tasks = sprint.tasks
+        val tasks = sprint.backlogItems
 
         // Assert
         assertEquals(1, tasks.size)
-        assertContains(tasks, task)
+        assertContains(tasks, backlogItem)
     }
 
     @Test
@@ -47,18 +47,18 @@ class SprintTests {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
-        val task = Task()
-        task.title = "Add backlog"
-        sprint.addTask(task)
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Add backlog"
+        sprint.addTask(backlogItem)
         sprint.startSprint()
         sprint.markFinished()
 
         // Act
-        val tasks = sprint.tasks
+        val tasks = sprint.backlogItems
 
         // Assert
         assertEquals(1, tasks.size)
-        assertContains(tasks, task)
+        assertContains(tasks, backlogItem)
     }
 
     @Test
@@ -111,16 +111,16 @@ class SprintTests {
     fun `FR-2_6) Adding backlog items should not cause a crash when a sprint is in a started state`() {
         // Arrange
         val sprint = Sprint()
-        val task = Task()
-        task.title = "Add backlog"
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Add backlog"
 
         // Act
-        sprint.addTask(task)
-        val tasks = sprint.tasks
+        sprint.addTask(backlogItem)
+        val tasks = sprint.backlogItems
 
         // Assert
         assertEquals(1, tasks.size)
-        assertContains(tasks, task)
+        assertContains(tasks, backlogItem)
     }
 
     @Test
@@ -141,13 +141,13 @@ class SprintTests {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
-        val task = Task()
-        task.title = "Add backlog"
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Add backlog"
         sprint.startSprint()
 
         // Act & Assert
         assertFailsWith<IllegalStateException> {
-            sprint.addTask(task)
+            sprint.addTask(backlogItem)
         }
     }
 
@@ -171,14 +171,14 @@ class SprintTests {
         // Arrange
         val sprint = Sprint()
         sprint.sprintInfo = mockk()
-        val task = Task()
-        task.title = "Add backlog"
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Add backlog"
         sprint.startSprint()
         sprint.markFinished()
 
         // Act & Assert
         assertFailsWith<IllegalStateException> {
-            sprint.addTask(task)
+            sprint.addTask(backlogItem)
         }
     }
 

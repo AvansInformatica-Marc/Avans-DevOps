@@ -1,17 +1,17 @@
 package nl.marc.devops.board.task_states
 
-import nl.marc.devops.board.Task
+import nl.marc.devops.board.BacklogItem
 
-class TaskStateFactory(private val task: Task) {
-    val plannedTask: TaskState = PlannedTaskState(task)
+class TaskStateFactory(private val backlogItem: BacklogItem) {
+    val plannedTask: BacklogItemState = PlannedBacklogItemState(backlogItem)
 
-    val taskInDevelopment: TaskState = InDevelopmentTaskState(task)
+    val taskInDevelopment: BacklogItemState = InDevelopmentBacklogItemState(backlogItem)
 
-    val taskReadyForTesting: TaskState = ReadyForTestingTaskState(task)
+    val taskReadyForTesting: BacklogItemState = ReadyForTestingBacklogItemState(backlogItem)
 
-    val testingInProgressTask: TaskState = TestingInProgressTaskState(task)
+    val testingInProgressTask: BacklogItemState = TestingInProgressBacklogItemState(backlogItem)
 
-    val testedTask: TaskState = TestingCompleteTaskState(task)
+    val testedTask: BacklogItemState = TestingCompleteBacklogItemState(backlogItem)
 
-    val completedTask: TaskState = CompletedTaskState(task)
+    val completedTask: BacklogItemState = CompletedBacklogItemState(backlogItem)
 }

@@ -2,7 +2,7 @@ package nl.marc.devops.board.task_states
 
 import nl.marc.devops.projects.Role
 
-abstract class TaskState {
+abstract class BacklogItemState {
     abstract val associatedRole: Role
 
     abstract val swimlane: String

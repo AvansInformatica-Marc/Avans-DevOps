@@ -1,14 +1,14 @@
 package nl.marc.devops.board.task_states
 
-import nl.marc.devops.board.Task
+import nl.marc.devops.board.BacklogItem
 import nl.marc.devops.projects.Role
 
-class ReadyForTestingTaskState(private val task: Task) : TaskState() {
+class ReadyForTestingBacklogItemState(private val backlogItem: BacklogItem) : BacklogItemState() {
     override val associatedRole = Role.TESTER
 
     override val swimlane = "Ready for testing"
 
     override fun setTestingInProgress() {
-        task.state = task.taskStateFactory.testingInProgressTask
+        backlogItem.state = backlogItem.taskStateFactory.testingInProgressTask
     }
 }

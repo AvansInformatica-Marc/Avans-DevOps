@@ -1,14 +1,14 @@
 package nl.marc.devops.board.sprint_states
 
 import nl.marc.devops.board.Sprint
-import nl.marc.devops.board.Task
+import nl.marc.devops.board.BacklogItem
 
 abstract class SprintState {
     abstract var sprintInfo: Sprint.Information?
 
-    abstract val tasks: Set<Task>
+    abstract val backlogItems: Set<BacklogItem>
 
-    open fun addTask(task: Task) {
+    open fun addTask(backlogItem: BacklogItem) {
         throw IllegalStateException("Can't add tasks to running sprints")
     }
 

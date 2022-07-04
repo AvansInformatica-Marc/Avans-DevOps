@@ -1,11 +1,11 @@
 package nl.marc.devops.board.sprint_states
 
 import nl.marc.devops.board.Sprint
-import nl.marc.devops.board.Task
+import nl.marc.devops.board.BacklogItem
 
 class RunningSprintState(
     private val sprint: Sprint,
-    override val tasks: Set<Task>,
+    override val backlogItems: Set<BacklogItem>,
     private val _sprintInfo: Sprint.Information
 ) : SprintState() {
     override var sprintInfo: Sprint.Information?
@@ -15,6 +15,6 @@ class RunningSprintState(
         }
 
     override fun markFinished() {
-        sprint.state = FinishedSprintState(sprint, tasks, sprintInfo!!)
+        sprint.state = FinishedSprintState(sprint, backlogItems, sprintInfo!!)
     }
 }

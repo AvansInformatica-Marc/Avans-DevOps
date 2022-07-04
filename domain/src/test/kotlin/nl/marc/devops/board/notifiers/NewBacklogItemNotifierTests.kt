@@ -5,15 +5,15 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import nl.marc.devops.accounts.User
-import nl.marc.devops.board.Task
-import nl.marc.devops.board.TaskStateChange
+import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.BacklogItemStateChange
 import nl.marc.devops.fixtures.UsersFixture
 import nl.marc.devops.notifications.NotificationService
 import nl.marc.devops.projects.GetUserByRoleService
 import nl.marc.devops.projects.Role
 import org.junit.jupiter.api.Test
 
-class NewTaskNotifierTests {
+class NewBacklogItemNotifierTests {
     @Test
     fun `FR-2_9, 1) The notifier should run without problems when no users are associated with the group`() {
         // Arrange
@@ -24,13 +24,13 @@ class NewTaskNotifierTests {
         val notificationService = mockk<NotificationService>()
         justRun { notificationService.sendNotification(any(), any(), any()) }
 
-        val notifier = NewTaskNotifier(getUserByRoleService, notificationService)
+        val notifier = NewBacklogItemNotifier(getUserByRoleService, notificationService)
 
-        val task = Task()
-        task.title = "Test notifications"
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Test notifications"
 
         // Act
-        notifier.notify(TaskStateChange(task, null, Role.TESTER, false))
+        notifier.notify(BacklogItemStateChange(backlogItem, null, Role.TESTER, false))
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { getUserByRoleService.getUsersByRole(Role.TESTER) }
@@ -47,13 +47,13 @@ class NewTaskNotifierTests {
         val notificationService = mockk<NotificationService>()
         justRun { notificationService.sendNotification(any(), any(), any()) }
 
-        val notifier = NewTaskNotifier(getUserByRoleService, notificationService)
+        val notifier = NewBacklogItemNotifier(getUserByRoleService, notificationService)
 
-        val task = Task()
-        task.title = "Test notifications"
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Test notifications"
 
         // Act
-        notifier.notify(TaskStateChange(task, null, Role.TESTER, false))
+        notifier.notify(BacklogItemStateChange(backlogItem, null, Role.TESTER, false))
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { getUserByRoleService.getUsersByRole(Role.TESTER) }
@@ -70,13 +70,13 @@ class NewTaskNotifierTests {
         val notificationService = mockk<NotificationService>()
         justRun { notificationService.sendNotification(any(), any(), any()) }
 
-        val notifier = NewTaskNotifier(getUserByRoleService, notificationService)
+        val notifier = NewBacklogItemNotifier(getUserByRoleService, notificationService)
 
-        val task = Task()
-        task.title = "Test notifications"
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Test notifications"
 
         // Act
-        notifier.notify(TaskStateChange(task, null, Role.TESTER, false))
+        notifier.notify(BacklogItemStateChange(backlogItem, null, Role.TESTER, false))
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { getUserByRoleService.getUsersByRole(Role.TESTER) }
@@ -94,13 +94,13 @@ class NewTaskNotifierTests {
         val notificationService = mockk<NotificationService>()
         justRun { notificationService.sendNotification(any(), any(), any()) }
 
-        val notifier = NewTaskNotifier(getUserByRoleService, notificationService)
+        val notifier = NewBacklogItemNotifier(getUserByRoleService, notificationService)
 
-        val task = Task()
-        task.title = "Test notifications"
+        val backlogItem = BacklogItem()
+        backlogItem.title = "Test notifications"
 
         // Act
-        notifier.notify(TaskStateChange(task, Role.DEVELOPERS, Role.TESTER, true))
+        notifier.notify(BacklogItemStateChange(backlogItem, Role.DEVELOPERS, Role.TESTER, true))
 
         // Assert
         verify(exactly = INVOCATION_KIND_ONCE) { getUserByRoleService.getUsersByRole(Role.TESTER) }
