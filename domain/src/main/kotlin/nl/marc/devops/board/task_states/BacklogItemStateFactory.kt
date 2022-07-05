@@ -1,6 +1,6 @@
 package nl.marc.devops.board.task_states
 
-class TaskStateFactory {
+class BacklogItemStateFactory {
     val plannedTask: BacklogItemState
         get() = PlannedBacklogItemState(this)
 

@@ -4,7 +4,7 @@ import nl.marc.devops.board.BacklogItem
 import nl.marc.devops.board.BacklogItemStateChange
 import nl.marc.devops.projects.Role
 
-class InDevelopmentBacklogItemState(private val taskStateFactory: TaskStateFactory) : BacklogItemState() {
+class InDevelopmentBacklogItemState(private val backlogItemStateFactory: BacklogItemStateFactory) : BacklogItemState() {
     override val associatedRole = Role.DEVELOPERS
 
     override val swimlane = "Doing"
@@ -12,7 +12,7 @@ class InDevelopmentBacklogItemState(private val taskStateFactory: TaskStateFacto
     override fun setDevelopmentCompleted(context: BacklogItem) = setPlannedForTesting(context)
 
     override fun setPlannedForTesting(context: BacklogItem) {
-        context.state = taskStateFactory.taskReadyForTesting
+        context.state = backlogItemStateFactory.taskReadyForTesting
         context.notify(BacklogItemStateChange(context, associatedRole, Role.TESTER, false))
     }
 }

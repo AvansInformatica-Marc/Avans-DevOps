@@ -2,12 +2,12 @@ package nl.marc.devops.board
 
 import nl.marc.devops.accounts.User
 import nl.marc.devops.board.task_states.CompletedBacklogItemState
-import nl.marc.devops.board.task_states.TaskStateFactory
+import nl.marc.devops.board.task_states.BacklogItemStateFactory
 import nl.marc.devops.projects.Role
 import java.util.*
 
 class BacklogItem : BacklogItemStateObservable() {
-    var state = TaskStateFactory().plannedTask
+    var state = BacklogItemStateFactory().plannedTask
 
     var title: String? = null
 
