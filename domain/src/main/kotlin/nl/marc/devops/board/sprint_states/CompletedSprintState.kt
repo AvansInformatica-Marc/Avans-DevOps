@@ -4,10 +4,10 @@ import nl.marc.devops.board.Sprint
 import nl.marc.devops.board.BacklogItem
 
 class CompletedSprintState(
-    private val sprint: Sprint,
+    sprint: Sprint,
     override val backlogItems: Set<BacklogItem>,
     private val _sprintInfo: Sprint.Information
-) : SprintState() {
+) : SprintState(sprint) {
     override var sprintInfo: Sprint.Information?
         get() = _sprintInfo
         set(_) {

@@ -1,9 +1,9 @@
 package nl.marc.devops.board.sprint_states
 
-import nl.marc.devops.board.Sprint
 import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.Sprint
 
-abstract class SprintState {
+abstract class SprintState(protected val sprint: Sprint) {
     abstract var sprintInfo: Sprint.Information?
 
     abstract val backlogItems: Set<BacklogItem>

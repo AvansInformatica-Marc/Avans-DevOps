@@ -1,13 +1,13 @@
 package nl.marc.devops.board.sprint_states
 
-import nl.marc.devops.board.Sprint
 import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.Sprint
 
 class RunningSprintState(
-    private val sprint: Sprint,
+    sprint: Sprint,
     override val backlogItems: Set<BacklogItem>,
     private val _sprintInfo: Sprint.Information
-) : SprintState() {
+) : SprintState(sprint) {
     override var sprintInfo: Sprint.Information?
         get() = _sprintInfo
         set(_) {
