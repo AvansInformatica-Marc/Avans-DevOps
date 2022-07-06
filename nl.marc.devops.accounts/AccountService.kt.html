@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Avans DevOps</a> &gt; <a href="index.source.html" class="el_package">nl.marc.devops.accounts</a> &gt; <span class="el_source">AccountService.kt</span></div><h1>AccountService.kt</h1><pre class="source lang-java linenums">package nl.marc.devops.accounts
+
+<span class="fc" id="L3">class AccountService(private val userRepository: UserRepository) {</span>
+    fun login(email: String, password: String): User {
+<span class="fc" id="L5">        val user = userRepository.findUserByEmail(email)</span>
+<span class="fc" id="L6">        val passwordHash = password.hashCode().toString(16)</span>
+
+<span class="fc" id="L8">        when {</span>
+<span class="fc bfc" id="L9" title="All 2 branches covered.">            user == null -&gt; throw IllegalArgumentException(&quot;E-mail is invalid&quot;)</span>
+<span class="fc bfc" id="L10" title="All 2 branches covered.">            user.passwordHash != passwordHash -&gt; throw IllegalArgumentException(&quot;Password is invalid&quot;)</span>
+<span class="fc" id="L11">            else -&gt; return user</span>
+        }
+    }
+
+    fun register(name: String, email: String, password: String): User {
+<span class="fc" id="L16">        return userRepository.addUser(User(name, email, password.hashCode().toString(16)))</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

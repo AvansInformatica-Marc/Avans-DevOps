@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CompletedSprintState.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Avans DevOps</a> &gt; <a href="index.source.html" class="el_package">nl.marc.devops.board.sprint_states</a> &gt; <span class="el_source">CompletedSprintState.kt</span></div><h1>CompletedSprintState.kt</h1><pre class="source lang-java linenums">package nl.marc.devops.board.sprint_states
+
+import nl.marc.devops.accounts.User
+import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.DateRange
+import nl.marc.devops.board.Sprint
+
+<span class="fc" id="L8">class CompletedSprintState(</span>
+    sprint: Sprint,
+<span class="pc" id="L10">    override val backlogItems: Set&lt;BacklogItem&gt;,</span>
+    scrumMaster: User?,
+    name: String?,
+    dateRange: DateRange?
+<span class="fc" id="L14">) : SprintState(sprint) {</span>
+<span class="pc" id="L15">    override var scrumMaster: User? = scrumMaster</span>
+<span class="nc" id="L16">        set(_) = throw IllegalStateException(&quot;Can't change scrum master when sprint is completed&quot;)</span>
+
+<span class="pc" id="L18">    override var name: String? = name</span>
+<span class="nc" id="L19">        set(_) = throw IllegalStateException(&quot;Can't change sprint name when sprint is completed&quot;)</span>
+
+<span class="pc" id="L21">    override var dateRange: DateRange? = dateRange</span>
+<span class="nc" id="L22">        set(_) = throw IllegalStateException(&quot;Can't change sprint start and end when sprint is completed&quot;)</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Project.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Avans DevOps</a> &gt; <a href="index.source.html" class="el_package">nl.marc.devops.projects</a> &gt; <span class="el_source">Project.kt</span></div><h1>Project.kt</h1><pre class="source lang-java linenums">package nl.marc.devops.projects
+
+import nl.marc.devops.accounts.User
+import nl.marc.devops.board.Sprint
+import java.util.*
+
+<span class="fc" id="L7">class Project(</span>
+<span class="pc" id="L8">    val name: String,</span>
+<span class="fc" id="L9">    val users: MutableMap&lt;User, Role&gt; = HashMap(),</span>
+<span class="pc" id="L10">    val sprints: MutableSet&lt;Sprint&gt; = mutableSetOf(),</span>
+<span class="pc" id="L11">    val id: UUID = UUID.randomUUID()</span>
+) {
+    fun isRoleUsed(role: Role): Boolean {
+<span class="fc" id="L14">        return role in users.values</span>
+    }
+
+    fun runGitCommand(command: String): String {
+<span class="nc" id="L18">        println(&quot;git $command&quot;)</span>
+<span class="nc" id="L19">        return &quot;command executed successfully.&quot;</span>
+    }
+<span class="fc" id="L21">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

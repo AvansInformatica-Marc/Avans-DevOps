@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SprintState.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Avans DevOps</a> &gt; <a href="index.source.html" class="el_package">nl.marc.devops.board.sprint_states</a> &gt; <span class="el_source">SprintState.kt</span></div><h1>SprintState.kt</h1><pre class="source lang-java linenums">package nl.marc.devops.board.sprint_states
+
+import nl.marc.devops.accounts.User
+import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.DateRange
+import nl.marc.devops.board.Sprint
+
+<span class="fc" id="L8">abstract class SprintState(protected val sprint: Sprint) {</span>
+    abstract var scrumMaster: User?
+
+    abstract var name: String?
+
+    abstract var dateRange: DateRange?
+
+    abstract val backlogItems: Set&lt;BacklogItem&gt;
+
+    open fun addTask(backlogItem: BacklogItem) {
+<span class="fc" id="L18">        throw IllegalStateException(&quot;Can't add tasks to running sprints&quot;)</span>
+    }
+
+    open fun startSprint() {
+<span class="fc" id="L22">        throw IllegalStateException(&quot;Can't start a sprint that was already started&quot;)</span>
+    }
+
+    open fun markFinished() {
+<span class="fc" id="L26">        throw IllegalStateException(&quot;Sprint should be running to cancel it&quot;)</span>
+    }
+
+    open fun onPipelineCompleted() {
+<span class="nc" id="L30">        throw IllegalStateException(&quot;Can't complete pipeline in this state&quot;)</span>
+    }
+
+    open fun onDocumentAttached() {
+<span class="nc" id="L34">        throw IllegalStateException(&quot;Can't add documents in this state&quot;)</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
