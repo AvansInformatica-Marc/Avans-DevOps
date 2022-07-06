@@ -1,16 +1,13 @@
 package nl.marc.devops.board
 
 import nl.marc.devops.accounts.User
-import nl.marc.devops.board.task_states.CompletedTaskState
-import nl.marc.devops.board.task_states.TaskState
-import nl.marc.devops.board.task_states.TaskStateFactory
+import nl.marc.devops.board.task_states.CompletedBacklogItemState
+import nl.marc.devops.board.task_states.BacklogItemStateFactory
 import nl.marc.devops.projects.Role
 import java.util.*
 
-class Task : TaskStateObservable() {
-    internal val taskStateFactory = TaskStateFactory(this)
-
-    var state: TaskState = taskStateFactory.plannedTask
+class BacklogItem : BacklogItemStateObservable() {
+    var state = BacklogItemStateFactory().plannedTask
 
     var title: String? = null
 
@@ -23,37 +20,37 @@ class Task : TaskStateObservable() {
     val swimlane: String by state::swimlane
 
     val isComplete: Boolean
-        get() = state is CompletedTaskState
+        get() = state is CompletedBacklogItemState
 
     fun startDevelopment() {
-        state.startDevelopment()
+        state.startDevelopment(this)
     }
 
     fun setDevelopmentCompleted() {
-        state.setDevelopmentCompleted()
+        state.setDevelopmentCompleted(this)
     }
 
     fun setPlannedForTesting() {
-        state.setPlannedForTesting()
+        state.setPlannedForTesting(this)
     }
 
     fun setTestingInProgress() {
-        state.setTestingInProgress()
+        state.setTestingInProgress(this)
     }
 
     fun testingSucceeded() {
-        state.testingSucceeded()
+        state.testingSucceeded(this)
     }
 
     fun testingFailed() {
-        state.testingFailed()
+        state.testingFailed(this)
     }
 
     fun passesDefinitionOfDone() {
-        state.passesDefinitionOfDone()
+        state.passesDefinitionOfDone(this)
     }
 
     fun failedDefinitionOfDone() {
-        state.failedDefinitionOfDone()
+        state.failedDefinitionOfDone(this)
     }
 }

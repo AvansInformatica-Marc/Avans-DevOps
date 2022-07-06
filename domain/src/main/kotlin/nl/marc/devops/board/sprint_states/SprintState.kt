@@ -1,14 +1,20 @@
 package nl.marc.devops.board.sprint_states
 
+import nl.marc.devops.accounts.User
+import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.DateRange
 import nl.marc.devops.board.Sprint
-import nl.marc.devops.board.Task
 
-abstract class SprintState {
-    abstract var sprintInfo: Sprint.Information?
+abstract class SprintState(protected val sprint: Sprint) {
+    abstract var scrumMaster: User?
 
-    abstract val tasks: Set<Task>
+    abstract var name: String?
 
-    open fun addTask(task: Task) {
+    abstract var dateRange: DateRange?
+
+    abstract val backlogItems: Set<BacklogItem>
+
+    open fun addTask(backlogItem: BacklogItem) {
         throw IllegalStateException("Can't add tasks to running sprints")
     }
 

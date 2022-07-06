@@ -1,18 +1,24 @@
 package nl.marc.devops.board.sprint_states
 
+import nl.marc.devops.accounts.User
+import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.DateRange
 import nl.marc.devops.board.Sprint
-import nl.marc.devops.board.Task
 
-class PlannedSprintState(private val sprint: Sprint) : SprintState() {
-    override var sprintInfo: Sprint.Information? = null
+class PlannedSprintState(sprint: Sprint) : SprintState(sprint) {
+    override var scrumMaster: User? = null
 
-    override val tasks = mutableSetOf<Task>()
+    override var name: String? = null
 
-    override fun addTask(task: Task) {
-        tasks += task
+    override var dateRange: DateRange? = null
+
+    override val backlogItems = mutableSetOf<BacklogItem>()
+
+    override fun addTask(backlogItem: BacklogItem) {
+        backlogItems += backlogItem
     }
 
     override fun startSprint() {
-        sprint.state = RunningSprintState(sprint, tasks, sprintInfo!!)
+        sprint.state = RunningSprintState(sprint, backlogItems, scrumMaster, name, dateRange)
     }
 }

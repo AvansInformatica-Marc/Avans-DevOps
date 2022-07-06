@@ -5,7 +5,10 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import nl.marc.devops.fixtures.UsersFixture
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertContains
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class ProjectsServiceTests {
     @Test
@@ -25,28 +28,8 @@ class ProjectsServiceTests {
         assertEquals(mapOf(user to Role.PRODUCT_OWNER), createdProject.users)
     }
 
-    private fun testRoleAvailability(inputRole: Role, testRole: Role): Boolean {
-        // Arrange
-        val user = UsersFixture.defaultUser
-        val project = Project("MyTestProject", mutableMapOf(user to inputRole))
-        val projectRepository = mockk<ProjectRepository>()
-        val projectsService = ProjectsService(projectRepository)
-
-        // Act
-        return projectsService.isRoleUsed(testRole, project)
-    }
-
     @Test
-    fun `FR-1_3) When a project has a product owner assigned, isRoleUsed should return true`() {
-        // Arrange Act
-        val isRoleOccupied = testRoleAvailability(Role.PRODUCT_OWNER, Role.PRODUCT_OWNER)
-
-        // Assert
-        assertTrue(isRoleOccupied)
-    }
-
-    @Test
-    fun `FR-1_3) When a project has a product owner assigned, addUserToProject with product owner role should throw error`() {
+    fun `FR-1_5, 1) When a project has a product owner assigned, addUserToProject with product owner role should throw error`() {
         // Arrange
         val users = UsersFixture.generateUsers(2)
         val project = Project("MyTestProject", mutableMapOf(users[0] to Role.PRODUCT_OWNER))
@@ -60,25 +43,7 @@ class ProjectsServiceTests {
     }
 
     @Test
-    fun `FR-1_5) When a project has no lead developer assigned, isRoleUsed should return false`() {
-        // Arrange & Act
-        val isRoleOccupied = testRoleAvailability(Role.PRODUCT_OWNER, Role.LEAD_DEVELOPER)
-
-        // Assert
-        assertFalse(isRoleOccupied)
-    }
-
-    @Test
-    fun `FR-1_5) When a project has a lead developer assigned, isRoleUsed should return true`() {
-        // Arrange & Act
-        val isRoleOccupied = testRoleAvailability(Role.LEAD_DEVELOPER, Role.LEAD_DEVELOPER)
-
-        // Assert
-        assertTrue(isRoleOccupied)
-    }
-
-    @Test
-    fun `FR-1_5) When a project has no lead developer assigned, addUserToProject should update repository`() {
+    fun `FR-1_5, 4) When a project has no lead developer assigned, addUserToProject should update repository`() {
         // Arrange
         val users = UsersFixture.generateUsers(2)
         val project = Project("MyTestProject", mutableMapOf(users[0] to Role.PRODUCT_OWNER))
@@ -97,7 +62,7 @@ class ProjectsServiceTests {
     }
 
     @Test
-    fun `FR-1_5) When a project has a lead developer assigned, addUserToProject with lead developer role should throw error`() {
+    fun `FR-1_5, 3) When a project has a lead developer assigned, addUserToProject with lead developer role should throw error`() {
         // Arrange
         val users = UsersFixture.generateUsers(2)
         val project = Project("MyTestProject", mutableMapOf(users[0] to Role.LEAD_DEVELOPER))
@@ -132,7 +97,7 @@ class ProjectsServiceTests {
     }
 
     @Test
-    fun `FR-1_5) Multiple developers and testers can be added to a project`() {
+    fun `FR-1_5, 2) Multiple developers and testers can be added to a project`() {
         // Arrange
         val users = UsersFixture.generateUsers(5)
         val project = Project("MyTestProject")

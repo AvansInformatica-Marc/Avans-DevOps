@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
-import nl.marc.devops.board.Task
+import nl.marc.devops.board.BacklogItem
 import java.util.*
 import kotlin.test.Test
 
@@ -12,7 +12,7 @@ class ThreadServiceTests {
     @Test
     fun `FR-3_2) When a backlog item is completed, the associated thread should not be deleted but marked as inactive`() {
         // Arrange
-        val backlogItem = mockk<Task>()
+        val backlogItem = mockk<BacklogItem>()
         val backlogId = UUID.randomUUID()
         every { backlogItem.isComplete } returns true
         every { backlogItem.id } returns backlogId

@@ -1,41 +1,42 @@
 package nl.marc.devops.board.task_states
 
+import nl.marc.devops.board.BacklogItem
 import nl.marc.devops.projects.Role
 
-abstract class TaskState {
+abstract class BacklogItemState {
     abstract val associatedRole: Role
 
     abstract val swimlane: String
 
-    open fun startDevelopment() {
+    open fun startDevelopment(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
-    open fun setDevelopmentCompleted() {
+    open fun setDevelopmentCompleted(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
-    open fun setPlannedForTesting() {
+    open fun setPlannedForTesting(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
-    open fun setTestingInProgress() {
+    open fun setTestingInProgress(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
-    open fun testingSucceeded() {
+    open fun testingSucceeded(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
-    open fun testingFailed() {
+    open fun testingFailed(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
-    open fun passesDefinitionOfDone() {
+    open fun passesDefinitionOfDone(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
-    open fun failedDefinitionOfDone() {
+    open fun failedDefinitionOfDone(context: BacklogItem) {
         throw IllegalStateException(DEFAULT_ERROR_MESSAGE)
     }
 
