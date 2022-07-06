@@ -10,6 +10,10 @@ class Project(
     val sprints: MutableSet<Sprint> = mutableSetOf(),
     val id: UUID = UUID.randomUUID()
 ) {
+    fun isRoleUsed(role: Role): Boolean {
+        return role in users.values
+    }
+
     fun runGitCommand(command: String): String {
         println("git $command")
         return "command executed successfully."

@@ -1,10 +1,8 @@
 package nl.marc.devops.board
 
-import io.mockk.mockk
 import nl.marc.devops.board.sprint_states.CompletedSprintState
 import nl.marc.devops.board.sprint_states.FinishedSprintState
 import nl.marc.devops.fixtures.UsersFixture
-import java.util.*
 import kotlin.test.*
 
 class SprintTests {
@@ -28,7 +26,6 @@ class SprintTests {
     fun `FR-2_6) Tasks should be readable in a running sprint state`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
         val backlogItem = BacklogItem()
         backlogItem.title = "Add backlog"
         sprint.addTask(backlogItem)
@@ -46,7 +43,6 @@ class SprintTests {
     fun `FR-2_6) Tasks should be readable in a completed sprint state`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
         val backlogItem = BacklogItem()
         backlogItem.title = "Add backlog"
         sprint.addTask(backlogItem)
@@ -65,47 +61,52 @@ class SprintTests {
     fun `FR-2_6) Sprint information should be readable when a sprint is in a started state`() {
         // Arrange
         val sprint = Sprint()
-        val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
-        sprint.sprintInfo = sprintInfo
+        sprint.name = "Sprint 1"
+        sprint.scrumMaster = UsersFixture.defaultUser
 
         // Act
-        val info = sprint.sprintInfo
+        val name = sprint.name
+        val scrumMaster = sprint.scrumMaster
 
         // Assert
-        assertEquals(info, sprintInfo)
+        assertEquals(name, "Sprint 1")
+        assertEquals(scrumMaster, UsersFixture.defaultUser)
     }
 
     @Test
     fun `FR-2_6) Sprint information should be readable when a sprint is in a running state`() {
         // Arrange
         val sprint = Sprint()
-        val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
-        sprint.sprintInfo = sprintInfo
+        sprint.name = "Sprint 1"
+        sprint.scrumMaster = UsersFixture.defaultUser
         sprint.startSprint()
 
         // Act
-        val info = sprint.sprintInfo
+        val name = sprint.name
+        val scrumMaster = sprint.scrumMaster
 
         // Assert
-        assertEquals(info, sprintInfo)
+        assertEquals(name, "Sprint 1")
+        assertEquals(scrumMaster, UsersFixture.defaultUser)
     }
 
     @Test
     fun `FR-2_6) Sprint information should be readable when a sprint is in a finished state`() {
         // Arrange
         val sprint = Sprint()
-        val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
-        sprint.sprintInfo = sprintInfo
+        sprint.name = "Sprint 1"
+        sprint.scrumMaster = UsersFixture.defaultUser
         sprint.startSprint()
         sprint.markFinished()
 
         // Act
-        val info = sprint.sprintInfo
+        val name = sprint.name
+        val scrumMaster = sprint.scrumMaster
 
         // Assert
-        assertEquals(info, sprintInfo)
+        assertEquals(name, "Sprint 1")
+        assertEquals(scrumMaster, UsersFixture.defaultUser)
     }
-
 
     @Test
     fun `FR-2_6) Adding backlog items should not cause a crash when a sprint is in a started state`() {
@@ -127,20 +128,20 @@ class SprintTests {
     fun `FR-2_6) Sprint information should be writeable when a sprint is in a started state`() {
         // Arrange
         val sprint = Sprint()
-        val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
 
         // Act
-        sprint.sprintInfo = sprintInfo
+        sprint.name = "Sprint 1"
+        sprint.scrumMaster = UsersFixture.defaultUser
 
         // Assert
-        assertEquals(sprintInfo, sprint.sprintInfo)
+        assertEquals(sprint.name, "Sprint 1")
+        assertEquals(sprint.scrumMaster, UsersFixture.defaultUser)
     }
 
     @Test
     fun `FR-2_6) Adding backlog items should throw an IllegalStateException when a sprint is in a running state`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
         val backlogItem = BacklogItem()
         backlogItem.title = "Add backlog"
         sprint.startSprint()
@@ -155,22 +156,21 @@ class SprintTests {
     fun `FR-2_6) Changing sprint information should throw an IllegalStateException when a sprint is in a running state`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
-        val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
         sprint.startSprint()
 
         // Act & Assert
         assertFailsWith<IllegalStateException> {
-            sprint.sprintInfo = sprintInfo
+            sprint.name = "Sprint 1"
+            sprint.scrumMaster = UsersFixture.defaultUser
         }
-        assertNotEquals(sprintInfo, sprint.sprintInfo)
+        assertNull(sprint.name)
+        assertNull(sprint.scrumMaster)
     }
 
     @Test
     fun `FR-2_6) Adding backlog items should throw an IllegalStateException when a sprint is in a finished state`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
         val backlogItem = BacklogItem()
         backlogItem.title = "Add backlog"
         sprint.startSprint()
@@ -186,23 +186,22 @@ class SprintTests {
     fun `FR-2_6) Changing sprint information should throw an IllegalStateException when a sprint is in a finished state`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
-        val sprintInfo = Sprint.Information(UsersFixture.defaultUser, "Sprint 1", Date(), Date())
         sprint.startSprint()
         sprint.markFinished()
 
         // Act & Assert
         assertFailsWith<IllegalStateException> {
-            sprint.sprintInfo = sprintInfo
+            sprint.name = "Sprint 1"
+            sprint.scrumMaster = UsersFixture.defaultUser
         }
-        assertNotEquals(sprintInfo, sprint.sprintInfo)
+        assertNull(sprint.name)
+        assertNull(sprint.scrumMaster)
     }
 
     @Test
     fun `FR-2_6) A sprint should be able to start and finish`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
 
         // Act
         sprint.startSprint()
@@ -216,7 +215,6 @@ class SprintTests {
     fun `FR-2_6) A sprint should be able to complete by pipeline when started and finished`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
 
         // Act
         sprint.startSprint()
@@ -231,7 +229,6 @@ class SprintTests {
     fun `FR-2_6) A sprint should be able to complete by document upload when started and finished`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
 
         // Act
         sprint.startSprint()
@@ -246,7 +243,6 @@ class SprintTests {
     fun `FR-2_7) Closing a planned sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
 
         // Act & Assert
         assertFailsWith<IllegalStateException> {
@@ -258,7 +254,6 @@ class SprintTests {
     fun `FR-2_7) Opening a closed sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
         sprint.startSprint()
         sprint.markFinished()
 
@@ -272,7 +267,6 @@ class SprintTests {
     fun `FR-2_7) Closing a closed sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
         sprint.startSprint()
         sprint.markFinished()
 
@@ -286,57 +280,11 @@ class SprintTests {
     fun `FR-2_6) Starting a running sprint should throw an IllegalStateException`() {
         // Arrange
         val sprint = Sprint()
-        sprint.sprintInfo = mockk()
         sprint.startSprint()
 
         // Act & Assert
         assertFailsWith<IllegalStateException> {
             sprint.startSprint()
-        }
-    }
-
-    @Test
-    fun `FR-2_5) When adding sprint information in the sprint builder, the info should be readable when a sprint is still planned`() {
-        // Arrange
-        val scrumMaster = UsersFixture.defaultUser
-        val sprintName = "Sprint 1"
-        val sprint = Sprint.Builder()
-            .setScrumMaster(scrumMaster)
-            .setSprintName(sprintName)
-            .setBeginDate(Date())
-            .setEndDate(Date())
-            .build()
-
-        // Act
-        val info = sprint.sprintInfo
-
-        // Assert
-        assertNotNull(info)
-        assertEquals(info.scrumMaster, scrumMaster)
-        assertEquals(info.name, sprintName)
-    }
-
-    @Test
-    fun `FR-2_5) Missing the scrum master in the builder causes a NullPointerException`() {
-        // Arrange
-        val sprintBuilder = Sprint.Builder()
-            .setSprintName("Sprint 2")
-
-        // Act & Assert
-        assertFailsWith<NullPointerException> {
-            sprintBuilder.build()
-        }
-    }
-
-    @Test
-    fun `FR-2_5) Missing the sprint name in the builder causes a NullPointerException`() {
-        // Arrange
-        val sprintBuilder = Sprint.Builder()
-            .setScrumMaster(UsersFixture.defaultUser)
-
-        // Act & Assert
-        assertFailsWith<NullPointerException> {
-            sprintBuilder.build()
         }
     }
 }

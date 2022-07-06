@@ -1,10 +1,16 @@
 package nl.marc.devops.board.sprint_states
 
+import nl.marc.devops.accounts.User
 import nl.marc.devops.board.BacklogItem
+import nl.marc.devops.board.DateRange
 import nl.marc.devops.board.Sprint
 
 abstract class SprintState(protected val sprint: Sprint) {
-    abstract var sprintInfo: Sprint.Information?
+    abstract var scrumMaster: User?
+
+    abstract var name: String?
+
+    abstract var dateRange: DateRange?
 
     abstract val backlogItems: Set<BacklogItem>
 

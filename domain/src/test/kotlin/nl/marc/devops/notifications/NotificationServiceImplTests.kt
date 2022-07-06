@@ -13,11 +13,10 @@ class NotificationServiceImplTests {
     fun `FR-1_4) When adding a notification channel, the repository gets updated`() {
         // Arrange
         val user = UsersFixture.defaultUser
-        val channel = NotificationChannel("EMAIL", "notifications@avans-devops.nl")
+        val channel = NotificationChannel(mockk(), "notifications@avans-devops.nl")
         val repository = mockk<NotificationsRepository>()
         justRun { repository.saveNotificationChannelsForUser(any(), any()) }
-        val notificationFactory = mockk<NotificationServiceFactory>()
-        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository)
 
         // Act
         notificationServiceImpl.addChannelsToUser(user, channel)
@@ -30,12 +29,11 @@ class NotificationServiceImplTests {
     fun `FR-1_4) When adding multiple notification channels, the repository gets updated`() {
         // Arrange
         val user = UsersFixture.defaultUser
-        val emailChannel = NotificationChannel("EMAIL", "notifications@avans-devops.nl")
-        val slackChannel = NotificationChannel("SLACK", "slack://avans-devops/#notifications")
+        val emailChannel = NotificationChannel(mockk(), "notifications@avans-devops.nl")
+        val slackChannel = NotificationChannel(mockk(), "slack://avans-devops/#notifications")
         val repository = mockk<NotificationsRepository>()
         justRun { repository.saveNotificationChannelsForUser(any(), any()) }
-        val notificationFactory = mockk<NotificationServiceFactory>()
-        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository)
 
         // Act
         notificationServiceImpl.addChannelsToUser(user, emailChannel, slackChannel)
@@ -49,17 +47,16 @@ class NotificationServiceImplTests {
         // Arrange
         val user = UsersFixture.defaultUser
         val recipient = "notifications@avans-devops.nl"
-        val channel = NotificationChannel("EMAIL", recipient)
+
+        val notificationStrategy = mockk<SendNotificationStrategy>()
+        justRun { notificationStrategy.sendNotification(any(), any(), any()) }
+
+        val channel = NotificationChannel(notificationStrategy, recipient)
 
         val repository = mockk<NotificationsRepository>()
         every { repository.getNotificationChannelsForUser(any()) } returns setOf(channel)
 
-        val notificationFactory = mockk<NotificationServiceFactory>()
-        val notificationStrategy = mockk<SendNotificationStrategy>()
-        every { notificationFactory.createNotificationStrategy(any<NotificationChannel>()) } returns notificationStrategy
-        justRun { notificationStrategy.sendNotification(any(), any(), any()) }
-
-        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository)
 
         // Act
         notificationServiceImpl.sendNotification("Build failed", "Pipeline", user)
@@ -74,22 +71,19 @@ class NotificationServiceImplTests {
         val user = UsersFixture.defaultUser
         val emailRecipient = "notifications@avans-devops.nl"
         val slackRecipient = "slack://avans-devops/#notifications"
-        val emailChannel = NotificationChannel("EMAIL", emailRecipient)
-        val slackChannel = NotificationChannel("SLACK", slackRecipient)
-
-        val repository = mockk<NotificationsRepository>()
-        every { repository.getNotificationChannelsForUser(any()) } returns setOf(emailChannel, slackChannel)
 
         val emailStrategy = mockk<SendNotificationStrategy>()
         justRun { emailStrategy.sendNotification(any(), any(), any()) }
         val slackStrategy = mockk<SendNotificationStrategy>()
         justRun { slackStrategy.sendNotification(any(), any(), any()) }
 
-        val notificationFactory = mockk<NotificationServiceFactory>()
-        every { notificationFactory.createNotificationStrategy(emailChannel) } returns emailStrategy
-        every { notificationFactory.createNotificationStrategy(slackChannel) } returns slackStrategy
+        val emailChannel = NotificationChannel(emailStrategy, emailRecipient)
+        val slackChannel = NotificationChannel(slackStrategy, slackRecipient)
 
-        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
+        val repository = mockk<NotificationsRepository>()
+        every { repository.getNotificationChannelsForUser(any()) } returns setOf(emailChannel, slackChannel)
+
+        val notificationServiceImpl = NotificationServiceImpl(repository)
 
         // Act
         notificationServiceImpl.sendNotification("Build failed", "Pipeline", user)
@@ -105,10 +99,8 @@ class NotificationServiceImplTests {
         val user = UsersFixture.defaultUser
         val repository = mockk<NotificationsRepository>()
         every { repository.getNotificationChannelsForUser(any()) } returns emptySet()
-        val notificationFactory = mockk<NotificationServiceFactory>()
         val notificationStrategy = mockk<SendNotificationStrategy>()
-        every { notificationFactory.createNotificationStrategy(any<NotificationChannel>()) } returns notificationStrategy
-        val notificationServiceImpl = NotificationServiceImpl(repository, notificationFactory)
+        val notificationServiceImpl = NotificationServiceImpl(repository)
 
         // Act
         notificationServiceImpl.sendNotification("Build failed", "Pipeline", user)
